@@ -42,12 +42,40 @@ void SeqTest2() {
 	//头插N个数据时间复杂度  O(N^2)
 	//尾插N个数据时间复杂度  O(N)
 
+}
+
+void SeqTest3() {
+	SeqList S;
+	SLInit(&S);
+	SLInsert(&S, 0, 1);
+	SLInsert(&S, 1, 2);
+	SLInsert(&S, 2, 3);
+	SLInsert(&S, 3, 4);
+	SLInsert(&S, 4, 5);
+	SLInsert(&S, 5, 5);
+	SLInsert(&S, 6, 5);
+	SLPrint(&S);
+
+	SLInsert(&S, 3, 400);
+	SLInsert(&S, 3, 400);
+	SLInsert(&S, 3, 400);
+	SLInsert(&S, 3, 400);
+	SLPrint(&S);
+
+	SLErase(&S, 3);
+	SLErase(&S, 3);
+	SLErase(&S, 0);
+	SLPrint(&S);
+	SLErase(&S, S.size-1);
+	SLPrint(&S);
 
 }
 
+//可以把该顺序表的操作写成一个菜单
 int main() {
 
 	//SeqTest1();
-	SeqTest2();
+	//SeqTest2();
+	SeqTest3();
 	return 0;
 }

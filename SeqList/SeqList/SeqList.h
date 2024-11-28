@@ -23,18 +23,21 @@ typedef struct SeqList {
 
 // 数据结构管理的需求   增删查改
 
-//初始化与销毁
-void SLInit(SeqList* ps);
+
+void SLInit(SeqList* ps);	//初始化与销毁
 void SLDestroy(SeqList* ps);
-// 尾插与尾删
-void SLPushBack(SeqList* ps, SLDataType data);
+void checkCapacity(SeqList* ps);	//检查容量与扩容   将扩容抽象成一个函数
+
+void SLPushBack(SeqList* ps, SLDataType data);	// 尾插与尾删
 void SLPopBack(SeqList* ps);
-// 头插与头删
-void SLPushFront(SeqList* ps, SLDataType data);
+
+void SLPushFront(SeqList* ps, SLDataType data);	// 头插与头删
 void SLPushFront(SeqList* ps, SLDataType data);
 
-//检查容量与扩容   将扩容抽象成一个函数
-void checkCapacity(SeqList* ps);
+void SLInsert(SeqList* ps, int pos, SLDataType data);	//在指定位置(给定数组下标)插入删除元素
+void SLErase(SeqList* ps, int pos);
+
+int FindSL(SeqList* ps, SLDataType ele);	//查找  暴力法
 
 //打印顺序表
 void SLPrint(SeqList* ps);
