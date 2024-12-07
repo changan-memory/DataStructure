@@ -20,8 +20,10 @@ void SLTPushBack(SListNode** pphead, SLTDataType data) {
 	//初始化
 	newNode->data = data;
 	newNode->next = NULL;
-	if (*pphead == NULL)
+	if (*pphead == NULL) {
 		*pphead = newNode;
+		return;
+	}
 
 	//找当前链表的尾结点
 	SListNode* tail = *pphead;
