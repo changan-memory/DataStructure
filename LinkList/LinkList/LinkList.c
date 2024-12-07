@@ -32,3 +32,5 @@ void SLTPushBack(SListNode** pphead, SLTDataType data) {
 	}
 	tail->next = newNode;
 }
+//ͷ�巨
+
