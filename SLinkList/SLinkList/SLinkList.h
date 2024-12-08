@@ -20,3 +20,10 @@ typedef struct SListNode {
 void SLTPrint(SListNode* phead);
 
 void SLTPushBack(SListNode** pphead, SLTDataType data);
+void SLTPushFront(SListNode** pphead, SLTDataType data);
+//βɾ��ͷɾ
+void SLTPopBack(SListNode** pphead);
+void SLTPopFront(SListNode** pphead);
+
+
+
