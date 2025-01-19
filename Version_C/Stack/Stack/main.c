@@ -51,6 +51,8 @@ bool isValid(char* s) {
     StackDestroy(&st); // Ïú»ÙÕ»£¬·ÀÖ¹ÄÚ´æĞ¹Â©
     return flag;
 }
+
+
 int main() {
 
 	StackTest();
