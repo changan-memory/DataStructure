@@ -25,5 +25,7 @@ void SLTPushFront(SListNode** pphead, SLTDataType data);
 void SLTPopBack(SListNode** pphead);
 void SLTPopFront(SListNode** pphead);
 
+SListNode* BuySLTNode(SLTDataType data);
+
 
 

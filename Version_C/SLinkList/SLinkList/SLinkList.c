@@ -1,7 +1,10 @@
 #include "SLinkList.h"
 
 //打印链表
-void SLTPrint(SListNode* phead) {	//无需断言，空链表也可以打印
+//传入链表第一个节点的地址
+//顺序表 传的是结构体的指针，就算数组内没有数据，结构体也必须存在，才能进行访问
+//链表的数据存放在节点中，一个节点就是一片空间，指针为空，代表该结点不存在
+void SLTPrint(SListNode* phead) {	//空链表也可以打印，因此不需要断言   
 	SListNode* cur = phead;
 	//while(cur)
 	while (cur != NULL) {
@@ -65,7 +68,6 @@ void SLTPopBack(SListNode** pphead) {
 		}
 		free(tail);
 		tail = NULL;
-
 		prev->next = NULL;
 	}
 }
