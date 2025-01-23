@@ -57,10 +57,27 @@ void TestLinkList2() {
 	SLTPrint(pList);
 
 }
+
+void TestFind() {
+	SListNode* head = NULL;
+	SLTPushBack(&head, 1);
+	SLTPushBack(&head, 2);
+	SLTPushBack(&head, 3);
+	SLTPushBack(&head, 4);
+	SLTPrint(head);
+	SListNode* retNode = SListFind(head, 2);
+	retNode->data *= 2;
+	SLTPrint(head);
+	SListInsert(&head, retNode, 9);
+	SListInsert(&head, retNode, 9);
+	SListErase(&head, retNode);
+	SLTPrint(head);
+
+}
 int main() {
 
 	//TestLinkList1();
-	TestLinkList2();
-
+	//TestLinkList2();
+	TestFind();
 	return 0;
 }
