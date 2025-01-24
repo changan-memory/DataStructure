@@ -19,6 +19,18 @@ void SLTPrint(SListNode* phead) { // 空链表也可以打印，因此不需要断言
     printf("NULL\n");   // cur等于 NULL时，跳出循环，然后输出NULL
 }
 
+//单链表的销毁
+void SListDestroy(SListNode** pphead) {
+    SListNode* cur = *pphead;	//拿到第一个结点
+    while (cur != NULL) {
+        SListNode* next = cur->next;	//保存下一个节点的地址
+        free(cur);
+        cur = next;
+    }
+    *pphead = NULL;
+}
+
+
 // 将创建节点的代码封装成一个函数
 SListNode* BuySLTNode(SLTDataType data) {
     SListNode* newNode = (SListNode*)malloc(sizeof(SListNode));
@@ -61,6 +73,10 @@ void SLTPushFront(SListNode** pphead, SLTDataType data) {
     assert(pphead);
 
     SListNode* newNode = BuySLTNode(data);
+    if (newNode == NULL) {
+        perror("malloc failed");
+        return;
+    }
     // 当*pphead为空时， 以下代码也适用
     newNode->next = *pphead;    //*pphead为空时，newNode->next  为NULL
     *pphead = newNode;
@@ -111,12 +127,10 @@ SListNode* SListFind(SListNode* phead, SLTDataType data) {
     SListNode* cur = phead;
     //遍历一遍 找到的话，return 指针，找不到，cur 移动
     while (cur != NULL) {
-        if (cur->data == data) {
+        if (cur->data == data)
             return cur;
-        }
-        else {
+        else
             cur = cur->next;
-        }
     }
     //走到这里代表没找到  返回空指针
     return NULL;

@@ -16,7 +16,10 @@ typedef struct SListNode {
 // typedef 在14行定义后才生效
 // 编译器碰到一个类型时， 会在该类型的上方查找 该类型的 定义 或 声明
 
+//销毁与打印
 void SLTPrint(SListNode* phead);
+void SListDestroy(SListNode** pphead);
+
 //尾插和头插
 void SLTPushBack(SListNode** pphead, SLTDataType data);
 void SLTPushFront(SListNode** pphead, SLTDataType data);
@@ -29,14 +32,15 @@ SListNode* BuySLTNode(SLTDataType data);
 //单链表查找
 SListNode* SListFind(SListNode* phead, SLTDataType data);
 
-// pos之前插入
+// pos之前插入    pos位置删除
 void SListInsert(SListNode** pphead, SListNode* pos, SLTDataType data);
-//pos位置删除
 void SListErase(SListNode** pphead, SListNode* pos);
 
-// pos后面插入
+//还有一种偷梁换柱的方法，不给头指针，删除pos前面的结点，中心思想是狸猫换太子
+
+
+// pos后面插入   pos后面删除
 void SListInsertAfter(SListNode* pos, SLTDataType data);
-//pos后面删除
 void SListEraseAfter(SListNode* pos);
 
 

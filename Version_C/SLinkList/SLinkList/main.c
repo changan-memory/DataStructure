@@ -72,12 +72,34 @@ void TestFind() {
 	SListInsert(&head, retNode, 9);
 	SListErase(&head, retNode);
 	SLTPrint(head);
+}
+
+void TestInserAfter() {
+	SListNode* head = NULL;
+	SLTPushBack(&head, 6);
+	SLTPushBack(&head, 5);
+	SLTPushBack(&head, 4);
+	SLTPushFront(&head, 1);
+	SLTPushFront(&head, 2);
+	SLTPushFront(&head, 3);
+	SLTPrint(head);
+
+	SListNode* retNode = SListFind(head, 6);
+
+	SListInsertAfter(retNode, 6);
+	SListInsertAfter(retNode, 6);
+	SLTPrint(head);
+
+	SListEraseAfter(retNode);
+	SLTPrint(head);
+	SListDestroy(&head);
 
 }
 int main() {
 
 	//TestLinkList1();
 	//TestLinkList2();
-	TestFind();
+	//TestFind();
+	TestInserAfter();
 	return 0;
 }
