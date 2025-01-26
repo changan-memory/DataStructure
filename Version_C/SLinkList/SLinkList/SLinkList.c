@@ -22,7 +22,7 @@ void SLTPrint(SListNode* phead) { // 空链表也可以打印，因此不需要断言
 //单链表的销毁
 void SListDestroy(SListNode** pphead) {
     assert(pphead);
-    assert(*pphead);
+    //assert(*pphead);  //空链表也可以销毁 只不过没有做任何操作
     SListNode* cur = *pphead;	//拿到第一个结点
     while (cur != NULL) {
         SListNode* next = cur->next;	//保存下一个节点的地址
