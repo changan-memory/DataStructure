@@ -13,7 +13,7 @@ void HeapInit(Heap* pheap) {
 }
 
 void Swap(HeapDataType* child, HeapDataType* parent) {
-	HeapDataType* temp = *child;
+	HeapDataType temp = *child;
 	*child = *parent;
 	*parent = temp;
 }
@@ -21,7 +21,6 @@ void Swap(HeapDataType* child, HeapDataType* parent) {
 void AdjustUp(HeapDataType* arr, int child) {
 	assert(arr);
 	int parent = (child - 1) / 2;
-
 	while (parent >= 0) {
 		if (arr[child] > arr[parent]) {
 			Swap(&arr[child], &arr[parent]);
