@@ -2,30 +2,7 @@
 #include "Heap.h"
 #include <time.h>
 
-void TestPush() {
-	Heap hp;
-	HeapInit(&hp);
-	HeapPush(&hp, 46);
-	HeapPush(&hp, 18);
-	HeapPush(&hp, 99);
-	HeapPush(&hp, 6);
-	HeapPush(&hp, 73);
-	HeapPush(&hp, 5);
-	HeapPush(&hp, 5);
-	HeapPush(&hp, 15);
-	HeapPush(&hp, 50);
-	HeapPush(&hp, 5);
-	HeapPush(&hp, 50);
-	HeapPush(&hp, 15);
-	HeapPush(&hp, 5);
-	int k = 0;
-	scanf("%d", &k);
-	while (!HeapEmpty(&hp) && k--) {
-		printf("%d ", HeapTop(&hp));
-		HeapPop(&hp);
-	}
-	printf("\n");
-}
+
 //堆排序  利用对的思想 对数组进行排序
 //只用到了向上和向下调整，不需要堆这个数据结构
 //排升序 --------- 建大堆
@@ -95,9 +72,34 @@ void PrintTopK(const char* file, int k) {
 		fscanf(fout, "%d", &topk[i]);
 	}
 }
+void TestPush() {
+	Heap hp;
+	HeapInit(&hp);
+	HeapPush(&hp, 46);
+	HeapPush(&hp, 18);
+	HeapPush(&hp, 99);
+	HeapPush(&hp, 6);
+	HeapPush(&hp, 73);
+	HeapPush(&hp, 5);
+	HeapPush(&hp, 5);
+	HeapPush(&hp, 15);
+	HeapPush(&hp, 50);
+	HeapPush(&hp, 5);
+	HeapPush(&hp, 50);
+	HeapPush(&hp, 15);
+	HeapPush(&hp, 5);
+	int k = 0;
+	printf("请输入k\n");
+	scanf("%d", &k);
+	while (!HeapEmpty(&hp) && k--) {
+		printf("%d ", HeapTop(&hp));
+		HeapPop(&hp);
+	}
+	printf("\n");
+}
 int main() {
-	//TestPush();
+	TestPush();
 	//TestHeapSort();
-	TestTopK();
+	//TestTopK();
 	return 0;
 }
