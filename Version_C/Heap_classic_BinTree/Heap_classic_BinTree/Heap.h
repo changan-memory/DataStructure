@@ -23,8 +23,23 @@ typedef struct HeapNode {
 	int capacity;
 }Heap;
 
+//交换堆中的元素
+void Swap(HeapDataType* child, HeapDataType* parent);
+//堆的向上 向下调整
+void AdjustUp(HeapDataType* arr, int child);
+void AdjustDown(HeapDataType* arr, int size, int parent);
+
+//堆初始化与销毁
 void HeapInit(Heap* pheap);
+void HeapDestroy(Heap* pheap);
 
+//堆插入和删除
 void HeapPush(Heap* pheap, HeapDataType data);
+void HeapPop(Heap* pheap);
 
-
+//获取堆顶元素
+HeapDataType HeapTop(Heap* pheap);
+//判断堆是否为空
+bool HeapEmpty(Heap* pheap);
+//获取堆的size
+int HeapSize(Heap* pheap);

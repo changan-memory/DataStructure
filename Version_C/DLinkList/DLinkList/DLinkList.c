@@ -29,6 +29,7 @@ void ListDestroy(ListNode* phead) {
 		free(cur);
 		cur = curNext;
 	}
+	free(phead);
 	phead = NULL;
 }
 //¥Ú”°¡¥±Ì
