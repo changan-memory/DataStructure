@@ -73,7 +73,7 @@ void PostOrder(BinTNode* root) {
 }
 
 
-//分治的思想
+//分治的思想  分治和递归有异曲同工之妙，可以提升思维能力
 //求树的结点数，最优方法，采用分治的思想
 int TreeSize(BinTNode* root) {
 	return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
