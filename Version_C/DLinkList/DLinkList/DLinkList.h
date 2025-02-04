@@ -13,7 +13,7 @@ typedef struct ListNode {
 	struct ListNode* prev;
 }ListNode;
 
-
+//申请结点
 ListNode* BuyListNode(LTDataType data);
 //初始化双向循环链表
 ListNode* ListInit();
