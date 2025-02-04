@@ -71,6 +71,8 @@ void PostOrder(BinTNode* root) {
 	PostOrder(root->right);
 	printf("%d ", root->data);	
 }
+
+
 //分治的思想
 //求树的结点数，最优方法，采用分治的思想
 int TreeSize(BinTNode* root) {

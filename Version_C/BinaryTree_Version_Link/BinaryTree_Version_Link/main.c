@@ -13,6 +13,7 @@
 //}
 
 
+
 //这种写法也不合适
 //void TreeSize(BinTNode* root, int* pSize) {
 //	if (root == NULL) {
@@ -46,5 +47,6 @@ int main() {
 	printf("TreeSize: %d\n", TreeSize(root));
 	printf("TreeHeight: %d\n", TreeHeight(root));
 	printf("KLevel: %d", TreeKLevel(root, 3));
+
 	return 0;
 }
