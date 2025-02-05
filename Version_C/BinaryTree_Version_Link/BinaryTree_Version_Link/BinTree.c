@@ -114,10 +114,12 @@ BinTNode* BinTFind(BinTNode* root, BinTDataType data) {
 		return NULL;
 	if (root->data == data)
 		return root;
+	//在左子树中找
 	BinTNode* leftRes = BinTFind(root->left, data);
 	if (leftRes)
 		return leftRes;
 	
+	//在右子树中找
 	BinTNode* rightRes = BinTFind(root->right, data);
 	if (rightRes)
 		return rightRes;
