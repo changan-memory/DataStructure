@@ -107,3 +107,20 @@ int TreeKLevel(BinTNode* root, int k) {
 	
 	return leftNum + rightNum;
 }
+
+//查找值为data的结点,返回结点的指针，使该函数同时具有修改的功能
+BinTNode* BinTFind(BinTNode* root, BinTDataType data) {
+	if (root == NULL)
+		return NULL;
+	if (root->data == data)
+		return root;
+	BinTNode* leftRes = BinTFind(root->left, data);
+	if (leftRes)
+		return leftRes;
+	
+	BinTNode* rightRes = BinTFind(root->right, data);
+	if (rightRes)
+		return rightRes;
+
+	return NULL;
+}

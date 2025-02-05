@@ -41,5 +41,9 @@ int TreeHeight(BinTNode* root);
 //求第k层的结点的个数
 int TreeKLevel(BinTNode* root, int k);
 
+//查找值为data的结点,返回结点的指针，使该函数同时具有修改的功能
+BinTNode* BinTFind(BinTNode* root, BinTDataType data);
+
+
 
 
