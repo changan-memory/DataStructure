@@ -67,43 +67,44 @@ void ListPushBack(ListNode* phead, LTDataType data) {
 void ListPopBack(ListNode* phead) {
 	assert(phead);
 	assert(!ListEmpty(phead));
-	//找尾
-	ListNode* tail = phead->prev;
-	ListNode* tailPrev = tail->prev;
 
-	tailPrev->next = phead;
-	phead->prev = tailPrev;
-	free(tail);
-	tail = NULL;
+	////找尾
+	//ListNode* tail = phead->prev;
+	//ListNode* tailPrev = tail->prev;
 
-	//ListErase(phead->prev);
+	//tailPrev->next = phead;
+	//phead->prev = tailPrev;
+	//free(tail);
+	//tail = NULL;
+
+	ListErase(phead->prev);
 }
 
 //头插和头删
 void ListPushFront(ListNode* phead, LTDataType data) {
 	assert(phead);
 
-	ListNode* newNode = BuyListNode(data);
-	//一定要先连上新结点，再断开
-	newNode->next = phead->next;
-	newNode->prev = phead;
+	//ListNode* newNode = BuyListNode(data);
+	////一定要先连上新结点，再断开
+	//newNode->next = phead->next;
+	//newNode->prev = phead;
 
-	phead->next->prev = newNode;
-	phead->next = newNode;
+	//phead->next->prev = newNode;
+	//phead->next = newNode;
 
-	//ListInsert(phead->next, data);
+	ListInsert(phead->next, data);
 }
 void ListPopFront(ListNode* phead) {
 	assert(phead);
 	assert(!ListEmpty(phead));
 	
-	ListNode* firstNode = phead->next;
+	/*ListNode* firstNode = phead->next;
 	phead->next = firstNode->next;
 	firstNode->next->prev = phead;
 	free(firstNode);
-	firstNode = NULL;
+	firstNode = NULL;*/
 
-	//ListErase(phead->next);
+	ListErase(phead->next);
 }
 
 //查找
