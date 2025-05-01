@@ -26,7 +26,8 @@ void Swap(HeapDataType* child, HeapDataType* parent) {
 	*parent = temp;
 }
 
-//插入，不能指定位置插入，因为新元素插入后要
+// 插入，不能指定位置插入。
+// 因为新元素插入后要进行调整使其满足堆的结构，指定的位置不一定是最终调整后的位置
 void HeapPush(Heap* pheap, HeapDataType data) {
 	assert(pheap);	//空堆也可以push，但需保证结构体存在
 
@@ -37,7 +38,6 @@ void HeapPush(Heap* pheap, HeapDataType data) {
 			perror("realloc failed\n");
 			return;
 		}
-
 		pheap->base = newSpace;
 		pheap->capacity *= 2;
 	}
@@ -70,17 +70,16 @@ void AdjustUp(HeapDataType* arr, int child) {
 	assert(arr);
 	int parent = (child - 1) / 2;
 	//while (parent >= 0) {		//	 个人建议while的循环条件内不要写太复杂的条件
-	//写成  child > 0  会更好  因为 最坏时 child 为 0 ，parent = (child-1)/2  (0-1)/2 == 0
-	//实际上 parent 不会为 <= 0
+	//写成  child > 0  会更好  因为 最坏时 child 为 0 ，此时parent = (child-1)/2  也为0
+	//因此 实际上 parent 不会为 <= 0
 	while (child > 0) {   // child 等于 0 或小于 0 时就不用再调整了
 		if (arr[child] > arr[parent]) {
 			Swap(&arr[child], &arr[parent]);
 			child = parent;
 			parent = (child - 1) / 2;
 		}
-		else {		//child <= parent 时
+		else		//child <= parent 时
 			break;
-		}
 	}
 }
 
