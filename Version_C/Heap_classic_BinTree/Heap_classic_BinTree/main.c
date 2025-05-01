@@ -88,9 +88,17 @@ void TestPush() {
 	HeapPush(&hp, 50);
 	HeapPush(&hp, 15);
 	HeapPush(&hp, 5);
+	/*HeapPush(&hp, 4);
+	HeapPush(&hp, 18);
+	HeapPush(&hp, 42);
+	HeapPush(&hp, 12);
+	HeapPush(&hp, 2);
+	HeapPush(&hp, 3);*/
+
 	int k = 0;
 	printf("请输入k\n");
-	scanf("%d", &k);
+	scanf("%d", &k);	//利用建堆的过程，获取前k个元素
+	//while (!HeapEmpty(&hp)) {
 	while (!HeapEmpty(&hp) && k--) {
 		printf("%d ", HeapTop(&hp));
 		HeapPop(&hp);

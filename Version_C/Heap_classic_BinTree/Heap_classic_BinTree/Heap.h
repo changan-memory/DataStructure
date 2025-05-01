@@ -11,17 +11,18 @@
 
 //小根堆   树中所有父亲都小于或等于孩子
 //大根堆   树中所有父亲都大于或等于孩子
-//堆可以用来排序，但堆并非是有序的  
+//堆可以用来排序，但堆并非是有序的  ,建堆的过程实际就是排序的过程
 
 //堆的向上调整
 
-//实现大堆
+//实现大堆   这里以实现大根堆为例子
 typedef int HeapDataType;
 typedef struct HeapNode {
 	HeapDataType* base;
 	int size;
 	int capacity;
 }Heap;
+
 
 //交换堆中的元素
 void Swap(HeapDataType* child, HeapDataType* parent);
