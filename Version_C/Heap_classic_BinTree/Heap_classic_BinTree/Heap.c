@@ -45,7 +45,7 @@ void HeapPush(Heap* pheap, HeapDataType data) {
 	pheap->size++;
 
 	//插入后需向上调整，保证插入后满足堆的特性
-	AdjustUp(pheap->base, pheap->size - 1);	//size++ 后，size-1 是新插入元素的位置
+	AdjustUp(pheap->base, pheap->size - 1);	//size++ 后，size-1 是新插入元素的下标
 }
 
 //堆的删除   要删除堆顶的数，删除堆尾的数据没有意义，删除最大的或最小的，可以选出第二大或第二小的
@@ -73,7 +73,7 @@ void AdjustUp(HeapDataType* arr, int child) {
 	//写成  child > 0  会更好  因为 最坏时 child 为 0 ，此时parent = (child-1)/2  也为0
 	//因此 实际上 parent 不会为 <= 0
 	while (child > 0) {   // child 等于 0 或小于 0 时就不用再调整了
-		if (arr[child] > arr[parent]) {
+		if (arr[child] > arr[parent]) {		// arr[child] > arr[parent] 建的是大堆
 			Swap(&arr[child], &arr[parent]);
 			child = parent;
 			parent = (child - 1) / 2;

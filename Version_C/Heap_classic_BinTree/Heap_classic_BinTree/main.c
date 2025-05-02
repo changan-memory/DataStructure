@@ -9,20 +9,31 @@
 //排降序 --------- 建小堆
 void HeapSort(HeapDataType* arr, int size) {
 	// 建堆 -----  1 向上调整建堆  时间复杂度  O(N*logN)
-	//for (int i = 1; i < size; i++) {	//让每个数都向上调整，就建成了堆(这里实现的是大堆)
-	//	AdjustUp(arr, i);
-	//}//建完堆后，arr[0]是最大的
+	// 模拟插入的过程  向上调整  实现建堆
+	// 通过 i 的移动，来模拟插入的过程  
+	// 从下标 1 开始扫描，依次向上调整，就完成了建堆
+	for (int i = 1; i < size; i++) {	//让每个数都向上调整，就建成了堆(这里实现的是大堆)
+		AdjustUp(arr, i);					//建完堆后，arr[0]是最大的
+	}
 
+	int end = size - 1;	// 最后一个元素的下标end, size是最后一个元素的下一个位置,下标就是前面数据的个数
+	while (end > 0) {	//end > 0, 最后 0 和 1交换  时间复杂度 O(N*logN)
+		Swap(&arr[end], &arr[0]);
+		AdjustDown(arr, end, 0);	//交换过后，模拟数组的大小变为size-1，也就是end
+		--end;
+	}
+}
+void HeapSort_2(HeapDataType* arr, int size) {
 	// 建堆 -----  2 向下调整建堆  时间复杂度  O(N)
-	//从  最后一个叶子的父亲  开始逐次向下调整
+	//从  最后一个叶子的父亲(倒数第一个非叶子节点)  开始逐次向下调整
 	for (int i = (size - 1 - 1) / 2; i >= 0; --i) {
 		AdjustDown(arr, size, i);
 	}
 
 	int end = size - 1;	// 最后一个元素的下标end, size是最后一个元素的下一个位置,下标就是前面数据的个数
-	while (end > 0) {	//end > 0, 最后和 1交换  时间复杂度 O(N*logN)
+	while (end > 0) {	//end > 0, 最后 0 和 1交换  时间复杂度 O(N*logN)
 		Swap(&arr[end], &arr[0]);
-		AdjustDown(arr, end, 0);	//交换过好，模拟数组的大小变为size-1，也就是end
+		AdjustDown(arr, end, 0);	//交换过后，模拟数组的大小变为size-1，也就是end
 		--end;
 	}
 }
@@ -32,7 +43,7 @@ void TestHeapSort() {
 		printf("%d ", arr[i]);
 	}
 	printf("\n");
-	HeapSort(arr, 10);
+	HeapSort(arr, sizeof(arr)/sizeof(arr[0]));
 	for (int i = 0; i < 10; ++i) {
 		printf("%d ", arr[i]);
 	}
@@ -106,8 +117,8 @@ void TestPush() {
 	printf("\n");
 }
 int main() {
-	TestPush();
-	//TestHeapSort();
+	//TestPush();
+	TestHeapSort();
 	//TestTopK();
 	return 0;
 }
