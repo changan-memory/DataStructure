@@ -83,14 +83,14 @@ void AdjustUp(HeapDataType* arr, int child) {
 	}
 }
 
-//向下向上调整时间复杂度为 logN
+// 向下向上调整时间复杂度为 logN
 // 向下调整 到叶子结点结束，叶子结点的左孩子 的下标  大于 size   size是数组的大小
 void AdjustDown(HeapDataType* arr, int size, int parent) {
 	assert(arr);
 	assert(parent >= 0 && parent < size);	//parent非负 且 不能越界
 	int child = parent * 2 + 1;
 	while (child < size) {
-		//检查 child+1 是否越界 以及 找出左右孩子中更大的那个
+		//检查 child+1 是否越界 以及 找出 左右孩子中更大的那个
 		if (child + 1 < size && arr[child + 1] > arr[child])
 			++child;
 
@@ -102,6 +102,19 @@ void AdjustDown(HeapDataType* arr, int size, int parent) {
 		else
 			break;
 	}
+}
+
+// 向上调整建堆
+void creatHeapUp(HeapDataType* arr, int size) {
+	for (int i = 1; i < size; ++i)
+		AdjustUp(arr, i);
+}
+// 向下调整建堆
+void creatHeapDown(HeapDataType* arr, int size) {
+	// 不能从 0 开始向下调整建堆，选择从 最后一个叶子结点的父亲(最后一个非叶子结点) 开始调整
+	// 向下调整的条件是，左右子树都是大堆，从下开始往上调，可以保证调到0的时候左右子树都是大堆
+	for (int i = (size - 1 - 1) / 2; i >= 0; --i)
+		AdjustDown(arr, size, i);
 }
 
 //获取堆顶元素
