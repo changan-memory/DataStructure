@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <string.h>
 
-//静态栈，实际工作中并不实用
+//静态栈，实际中并不实用
 //#define N 10
 //struct Stack {
 //	int base[N];
@@ -13,6 +14,7 @@
 
 #define INIT_CAPACITY 4
 typedef int StackDataType;		//括号匹配需要把 int 换成char
+
 typedef struct Stack {
 	StackDataType* base;
 	int top;	//top表示栈顶元素的下一个位置

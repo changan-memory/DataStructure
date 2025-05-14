@@ -18,17 +18,16 @@ void StackTest() {
 	//销毁栈
 	StackDestroy(&st);
 }
-//括号匹配
+//括号匹配   再写一个用不匹配进行往下判断的思路
 bool isValid(char* s) {
     Stack st;
     StackInit(&st);
-    bool flag = true;
+    bool flag = true;   //假设匹配
     for (int i = 0; i < strlen(s); i++) {
-        if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{')
             StackPush(&st, s[i]); // 左括号入栈
-        }
         else {
-            if (StackEmpty(&st)) {  // 栈为空时，说明只有有括号
+            if (StackEmpty(&st)) {  // 栈为空时，说明s内只有右括号或 s为空
                 flag = false;
                 break;  // 一旦遇到不匹配，直接跳出循环
             }

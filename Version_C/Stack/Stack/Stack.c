@@ -10,7 +10,7 @@ void StackInit(Stack* ps) {
 		return;
 	}
 	ps->capacity = INIT_CAPACITY;
-	ps->top = 0;	//top是栈顶元素的下一个位置
+	ps->top = 0;	//top 初始给0 表示栈顶元素的下一个位置，也可以给初始给-1，表示栈顶元素的下标
 }
 void StackDestroy(Stack* ps) {
 	assert(ps);
@@ -64,3 +64,60 @@ int StackSize(Stack* ps) {
 	assert(ps);
 	return ps->top;
 }
+
+////复习的二次实现
+////初始化与销毁
+//void StackInit(Stack* ps) {
+//	assert(ps);	//栈的结构体必须存在
+//	ps->base = (StackDataType*)malloc(sizeof(StackDataType) * INIT_CAPACITY);
+//	if (ps->base == NULL) {
+//		perror("malloc failed\n");
+//		return;
+//	}
+//	ps->capacity = INIT_CAPACITY;
+//	ps->top = 0;	
+//}
+//void StackDestroy(Stack* ps) {
+//	assert(ps);
+//	free(ps->base);
+//	ps->base = NULL;
+//
+//	ps->capacity = ps->top = 0;
+//}
+//
+////入栈与出栈
+//void StackPush(Stack* ps, StackDataType ele) {
+//	assert(ps);
+//	//检查扩容
+//	if (ps->top == ps->capacity) {
+//		StackDataType* newSpace = (StackDataType*)realloc(ps->base, sizeof(StackDataType)*ps->capacity*2);
+//		if (newSpace == NULL) {
+//			perror("realloc failed\n");
+//			return;
+//		}
+//		ps->base = newSpace;
+//		ps->capacity *= 2;
+//	}
+//	// 插入元素
+//	ps->base[ps->top++] = ele;
+//}
+//void StackPop(Stack* ps) {
+//	assert(ps);
+//	assert(!StackEmpty(ps));
+//	ps->top--;
+//}
+//
+//StackDataType StackTop(Stack* ps) {
+//	assert(ps);
+//	assert(!StackEmpty(ps));
+//	return ps->base[ps->top - 1];
+//}
+//bool StackEmpty(Stack* ps) {
+//	assert(ps);
+//	return ps->top == 0;
+//}
+//
+//int StackSize(Stack* ps) {
+//	assert(ps);
+//	return ps->top;
+//}
