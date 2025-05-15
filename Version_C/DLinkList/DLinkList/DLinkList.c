@@ -14,6 +14,7 @@ ListNode* BuyListNode(LTDataType data) {
 }
 
 //初始化，设置哨兵位   可以返回节点来避免Init函数参数的二级指针
+// 不能用哨兵位结点，存放链表的size,因为链表内的数据不一定存放的是int类型，
 ListNode* ListInit() {
 	ListNode* phead = BuyListNode(-1);
 

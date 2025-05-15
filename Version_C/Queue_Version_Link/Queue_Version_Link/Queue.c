@@ -22,6 +22,7 @@ void QueueDestroy(Queue* pQueue) {
 
 // 队尾入队列    队头出队列
 void QueuePush(Queue* pQueue, QDataType data) {
+	assert(pQueue);
 	QNode* newNode = (QNode*)malloc(sizeof(QNode));
 	if (newNode == NULL) {
 		perror("malloc failed\n");
@@ -29,10 +30,9 @@ void QueuePush(Queue* pQueue, QDataType data) {
 	}
 	newNode->data = data;
 	newNode->next = NULL;
-
-	//队列为空时 特殊处理
+	// 初始化后，head 和 tail 都为NULL
 	if (pQueue->head == NULL) {
-		assert(pQueue->tail == NULL);
+		assert(pQueue->tail == NULL);	// head为NULL时，tail必须也为NULL
 		pQueue->head = pQueue->tail = newNode;
 	}
 	else {
@@ -97,4 +97,81 @@ bool QueueEmpty(Queue* pQueue) {
 	return (pQueue->head == NULL && pQueue->tail == NULL);
 	//return pQueue->size == 0;
 }
+
+
+////初始化 与 销毁队列
+//void QueueInit(Queue* pQueue) {
+//	// 队列结构体需要存在
+//	assert(pQueue);
+//	pQueue->head = pQueue->tail = NULL;
+//	pQueue->size = 0;
+//}
+//void QueueDestroy(Queue* pQueue) {
+//	assert(pQueue);
+//	QNode* cur = pQueue->head;
+//	while (cur != NULL) {
+//		QNode* next = cur->next;
+//		free(cur);
+//		cur = next;
+//	}
+//	pQueue->head = pQueue->tail = NULL;
+//	pQueue->size = 0;
+//}
+
+//// 队尾入队列    队头出队列
+//void QueuePush(Queue* pQueue, QDataType data) {
+//	assert(pQueue);
+//	QNode* newNode = (QNode*)malloc(sizeof(QNode));
+//	if (newNode == NULL) {
+//		perror("malloc failed\n");
+//		return;
+//	}
+//	newNode->data = data;
+//	newNode->next = NULL;
+//	if (QueueEmpty(pQueue)) {
+//		pQueue->head = newNode;
+//		pQueue->tail = newNode;
+//	}
+//	else {
+//		pQueue->tail->next = newNode;
+//		pQueue->tail = newNode;
+//	}
+//	pQueue->size++;
+//}
+//void QueuePop(Queue* pQueue) {
+//	assert(pQueue);
+//	assert(!QueueEmpty(&pQueue));
+//	if (pQueue->head == pQueue->tail) {
+//		free(pQueue->head);
+//		pQueue->head = pQueue->tail = NULL;
+//	}
+//	else {
+//		QNode* next = pQueue->head->next;
+//		free(pQueue->head);
+//		pQueue->head = next;
+//	}
+//	pQueue->size--;
+//}
+
+//// 获取队列头部元素   /获取队列尾部元素
+//QDataType QueueFront(Queue* pQueue) {
+//	assert(pQueue);
+//	assert(!QueueEmpty(pQueue));
+//	return pQueue->head->data;
+//}
+//QDataType QueueBack(Queue* pQueue) {
+//	assert(pQueue);
+//	assert(!QueueEmpty(pQueue));
+//	return pQueue->tail->data;
+//}
+//
+////获取队列中有效元素个数	检测队列是否为空，如果为空返回非零结果，如果非空返回0
+//size_t QueueSize(Queue* pQueue) {
+//	assert(pQueue);
+//	return pQueue->size;
+//}
+//bool QueueEmpty(Queue* pQueue) {
+//	assert(pQueue);
+//	return pQueue->size == 0;
+//}
 

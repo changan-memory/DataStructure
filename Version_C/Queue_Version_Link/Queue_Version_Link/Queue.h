@@ -12,7 +12,7 @@ typedef struct QNode {		//链式队列，用单链表实现
 	QDataType data;
 }QNode;
 
-//用两个指针来指示 队头和队尾
+//队列中 用两个指针来指示 队头和队尾，方便入队和出队
 typedef struct Queue {
 	QNode* head;
 	QNode* tail;
