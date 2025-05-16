@@ -43,5 +43,12 @@ void SListErase(SListNode** pphead, SListNode* pos);
 void SListInsertAfter(SListNode* pos, SLTDataType data);
 void SListEraseAfter(SListNode* pos);
 
+//// 求链表的size, 可以添加一个结构体，结构内存放指向头结点的指针和size,仿照和队列的写法
+//typedef struct List {
+//	SListNode* pList;	//指向头结点的指针,存放头结点的地址
+//	int size;
+//}List;
+
+
 
 

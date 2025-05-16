@@ -61,12 +61,11 @@ void QueuePop(Queue* pQueue) {
 
 	//优化版本
 	QNode* cur = pQueue->head;
-	if (pQueue->head == pQueue->tail) {
+	if (pQueue->head == pQueue->tail)
 		pQueue->head = pQueue->tail = NULL;
-	}
-	else {
+	else
 		pQueue->head = pQueue->head->next;
-	}
+
 	free(cur);
 	pQueue->size--;
 }
@@ -87,15 +86,16 @@ QDataType QueueBack(Queue* pQueue) {
 }
 
 //获取队列中有效元素个数	检测队列是否为空，如果为空返回非零结果，如果非空返回0
-//不能用 哨兵尾的数据  来存储 队列或者链表的长度
+// 双向链表中，不能用 哨兵位的数据  来存储 链表的长度
+// 之前的实现中，结点内存放的数据是int，导致哨兵位内的数据位类型也是int,
 int QueueSize(Queue* pQueue) {
 	assert(pQueue);
 	return pQueue->size;
 }
 bool QueueEmpty(Queue* pQueue) {
 	assert(pQueue);
-	return (pQueue->head == NULL && pQueue->tail == NULL);
-	//return pQueue->size == 0;
+	//return (pQueue->head == NULL && pQueue->tail == NULL);
+	return pQueue->size == 0;	// size为0时为空
 }
 
 

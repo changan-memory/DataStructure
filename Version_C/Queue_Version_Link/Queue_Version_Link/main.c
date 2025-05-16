@@ -8,6 +8,12 @@ void TestQueue() {
 	QueuePush(&queue, 3);
 	QueuePush(&queue, 4);
 	QueuePush(&queue, 6);
+
+	// 遍历的代码
+	/*while (!QueueEmpty(&queue)) {
+		printf("%d ", QueueFront(&queue));
+		QueuePop(&queue);
+	}*/
 	
 	printf("队尾：%d  有效元素个数：%d\n", QueueBack(&queue), QueueSize(&queue));
 	printf("队头：%d  有效元素个数：%d\n", QueueFront(&queue), QueueSize(&queue));
