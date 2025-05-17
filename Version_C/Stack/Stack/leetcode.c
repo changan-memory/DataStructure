@@ -1,8 +1,8 @@
 #include "Stack.h"
 
 typedef struct {
-	Stack st1;  //入队栈
-	Stack st2;  //出队栈
+	Stack pushST;  //入队栈
+	Stack popST;  //出队栈
 } MyQueue;
 
 
@@ -12,49 +12,48 @@ MyQueue* myQueueCreate() {
 		perror("malloc failed\n");
 		return NULL;
 	}
-	StackInit(&pq->st1);
-	StackInit(&pq->st2);
+	StackInit(&pq->pushST);
+	StackInit(&pq->popST);
 	return pq;
 }
 
 void myQueuePush(MyQueue* obj, int x) {
-	// st1为入队栈，st2为出队栈
-	StackPush(&obj->st1, x);
+	// pushST为入队栈，popST为出队栈
+	StackPush(&obj->pushST, x);
 }
 
 int myQueuePop(MyQueue* obj) {
 	// 如果出队栈为空，将入队栈所有元素倒到出队栈
-	if (StackEmpty(&obj->st2)) {
-		while (!StackEmpty(&obj->st1)) {
-			StackPush(&obj->st2, StackTop(&obj->st1));
-			StackPop(&obj->st1);
+	if (StackEmpty(&obj->popST)) {
+		while (!StackEmpty(&obj->pushST)) {
+			StackPush(&obj->popST, StackTop(&obj->pushST));
+			StackPop(&obj->pushST);
 		}
 	}
-
 	// 此时出队栈顶即为队列头部元素
-	int data = StackTop(&obj->st2);
-	StackPop(&obj->st2);
+	int data = StackTop(&obj->popST);
+	StackPop(&obj->popST);
 	return data;
 }
 
 int myQueuePeek(MyQueue* obj) {
 	//出队栈为空，倒全部数据
-	if (StackEmpty(&obj->st2)) {
-		while (!StackEmpty(&obj->st1)) {
-			StackPush(&obj->st2, StackTop(&obj->st1));
-			StackPop(&obj->st1);
+	if (StackEmpty(&obj->popST)) {
+		while (!StackEmpty(&obj->pushST)) {
+			StackPush(&obj->popST, StackTop(&obj->pushST));
+			StackPop(&obj->pushST);
 		}
 	}
-	return StackTop(&obj->st2);
+	return StackTop(&obj->popST);
 }
 
 bool myQueueEmpty(MyQueue* obj) {
-	return StackEmpty(&obj->st1) && StackEmpty(&obj->st2);
+	return StackEmpty(&obj->pushST) && StackEmpty(&obj->popST);
 }
 
 void myQueueFree(MyQueue* obj) {
-	StackDestroy(&obj->st1);
-	StackDestroy(&obj->st2);
+	StackDestroy(&obj->pushST);
+	StackDestroy(&obj->popST);
 	free(obj);
 	obj = NULL;
 }

@@ -11,7 +11,7 @@ typedef struct {
 MyStack* myStackCreate() {
 	MyStack* mStack = (MyStack*)malloc(sizeof(MyStack));
 	if (mStack == NULL) {
-		perror("mallco failed\n");
+		perror("malloc failed\n");
 		return NULL;
 	}
 	// 两个q也要初始化
@@ -32,20 +32,6 @@ void myStackPush(MyStack* obj, int x) {
 
 // Pop需要搬运数据
 int myStackPop(MyStack* obj) {
-	// // 哪个队列不为空，才能pop
-	// if(!QueueEmpty(&obj->q1)){
-	//     for(int i = 0;i<&obj->q1.size;++i){
-	//         QDataType data = QueueFront(&obj->q1);
-	//         QueuePush(&obj->q2, data);
-	//         QueuePop(&obj->q1);
-	//     }
-	// }else{
-	//      for(int i = 0;i<&obj->q2.size;++i){
-	//         QDataType data = QueueFront(&obj->q2);
-	//         QueuePush(&obj->q1, data);
-	//         QueuePop(&obj->q2);
-	//     }
-	// }
 	Queue* emptyQ = &obj->q1;
 	Queue* nonemptyQ = &obj->q2;
 	if (!QueueEmpty(&obj->q1)) {
