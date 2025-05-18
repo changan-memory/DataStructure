@@ -67,6 +67,7 @@ void QueuePop(Queue* pQueue) {
 		pQueue->head = pQueue->head->next;
 
 	free(cur);
+	cur = NULL;
 	pQueue->size--;
 }
 
