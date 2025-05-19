@@ -33,4 +33,3 @@ StackDataType StackTop(Stack* ps);	//获取栈顶元素
 bool StackEmpty(Stack* ps);		//判断是否为空
 
 int StackSize(Stack* ps);	//获取栈中有效元素个数
-

@@ -3,8 +3,7 @@
 //初始化 与 销毁队列
 void QueueInit(Queue* pQueue) {
 	assert(pQueue);
-	pQueue->head = NULL;
-	pQueue->tail = NULL;
+	pQueue->head = pQueue->tail = NULL;
 	pQueue->size = 0;
 }
 //销毁

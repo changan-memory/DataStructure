@@ -17,8 +17,7 @@ void StackDestroy(Stack* ps) {
 	
 	free(ps->base);
 	ps->base = NULL;
-	ps->capacity = 0;
-	ps->top = 0;
+	ps->capacity = ps->top = 0;
 }
 
 //ÈëÕ»Óë³öÕ»
