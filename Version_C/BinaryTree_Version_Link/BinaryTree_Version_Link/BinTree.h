@@ -33,6 +33,7 @@ BinTNode* CreatTree();
 void PreOrder(BinTNode* root);
 void InOrder(BinTNode* root);
 void PostOrder(BinTNode* root);
+
 //获取树的结点个数
 int TreeSize(BinTNode* root);
 //求树的高度(深度)
