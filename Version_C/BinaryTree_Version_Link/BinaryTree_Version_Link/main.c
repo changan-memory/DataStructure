@@ -1,5 +1,7 @@
 #include "BinTree.h"
 
+// 局部的static 变量 只会初始化一次，之后就无法再初始化了
+
 ////用全局变量求节点数，不合适，很危险，连续调用两次的话会累计计数
 //int size = 0;
 //void TreeSize(BinTNode* root) {

@@ -67,3 +67,21 @@ void PostOrder(BinTNode* root) {
 	PostOrder(root->right);
 	printf("%d ", root->data);
 }
+
+// 求二叉树的结点的个数
+//分治的思想  分治和递归有异曲同工之妙，可以提升思维能力
+//求树的结点数，最优方法，采用分治的思想
+// 树的总结点数 = 左子树的节点数 + 右子树的节点数 + 根节点树(1)
+int TreeSize(BinTNode* root) {
+	if (root == NULL)
+		return 0;
+	return TreeSize(root->left) + TreeSize(root->right) + 1;
+}
+
+void TreeSize1(BinTNode* root, int* psize) {
+	if (root == NULL)
+		return;
+	++(*psize);
+	TreeSize1(root->left, psize);
+	TreeSize1(root->right, psize);
+}

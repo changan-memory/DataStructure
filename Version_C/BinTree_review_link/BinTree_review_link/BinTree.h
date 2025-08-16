@@ -19,9 +19,15 @@ BinTNode* BuyNode(BTDataType data);
 // 创建一棵树
 BinTNode* CreatTree();
 
+// 前序中序后序  递归的过程是一样的，只是访问根节点的时机不同
 // 前序遍历
 void PreOrder(BinTNode* root);
 // 中序遍历
 void InOrder(BinTNode* root);
 // 后序遍历
 void PostOrder(BinTNode* root);
+// 求二叉树的结点的个数
+int TreeSize(BinTNode* root);
+
+void TreeSize1(BinTNode* root, int* psize);
+
