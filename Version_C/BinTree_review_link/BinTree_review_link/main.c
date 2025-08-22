@@ -9,16 +9,22 @@ void test_Order() {
 	PostOrder(root);
 	printf("\n");
 }
-void testSize() {
+void testSize1() {
 	BinTNode* root = CreatTree();
 
 	int size = 0;
 	TreeSize1(root, &size);
 	printf("%d\n", size);
 }
+void testSize2() {
+	BinTNode* root = CreatTree();
+	int size = TreeSize(root);
+	printf("%d\n", size);
+}
 int main() {
 	//test_Order();
-	testSize();
+	//testSize1();
+	testSize2();
 	return 0;
 }
 

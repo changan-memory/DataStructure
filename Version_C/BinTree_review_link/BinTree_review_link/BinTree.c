@@ -22,12 +22,14 @@ BinTNode* CreatTree() {
 	BinTNode* node4 = BuyNode(4);
 	BinTNode* node5 = BuyNode(5);
 	BinTNode* node6 = BuyNode(6);
+	BinTNode* node7 = BuyNode(6);
 	// 建立链接关系
 	node1->left = node2;
 	node1->right = node4;
 	node2->left = node3;
 	node4->left = node5;
 	node4->right = node6;
+	node3->right = node7;
 	return node1;
 }
 
@@ -109,7 +111,18 @@ int TreeHeight(BinTNode* root) {
 	int rightHeight = TreeHeight(root->right);
 	return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
 }
-// 求第K层的节点的个数
-int TreeKLevel(BinTNode* root, int k) {
 
+// 递归的关键： 1. 拆成子问题  2. 递归结束条件
+// 求第K层的节点的个数
+// 根的第K层 == 左子树的第 K - 1 层 + 右子树的第 K - 1 层
+int TreeKLevel(BinTNode* root, int k) {
+	assert(k > 0);
+	if (root == NULL)
+		return 0;
+	// 递归结束条件
+	if (k == 1)
+		return 1;
+	int leftNum = TreeKLevel(root->left, k - 1);
+	int rightNum = TreeKLevel(root->right, k - 1);
+	return leftNum + rightNum;
 }
