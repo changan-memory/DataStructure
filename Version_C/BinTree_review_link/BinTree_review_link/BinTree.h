@@ -26,8 +26,16 @@ void PreOrder(BinTNode* root);
 void InOrder(BinTNode* root);
 // 后序遍历
 void PostOrder(BinTNode* root);
+
+int g_size;
+
 // 求二叉树的结点的个数
 int TreeSize(BinTNode* root);
-
+// 外部变量的指针的写法
 void TreeSize1(BinTNode* root, int* psize);
-
+// 全局变量的写法
+void TreeSize2(BinTNode* root);
+// 求数的高度
+int TreeHeight(BinTNode* root);
+// 求第k层的结点个数
+int TreeKLevel(BinTNode* root, int k);

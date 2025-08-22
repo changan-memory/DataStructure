@@ -69,19 +69,47 @@ void PostOrder(BinTNode* root) {
 }
 
 // 求二叉树的结点的个数
-//分治的思想  分治和递归有异曲同工之妙，可以提升思维能力
-//求树的结点数，最优方法，采用分治的思想
-// 树的总结点数 = 左子树的节点数 + 右子树的节点数 + 根节点树(1)
+// 分治的思想  分治和递归有异曲同工之妙，可以提升思维能力
+// 求树的结点数，最优方法，采用分治的思想
+// 树的总结点数 = 左子树的节点数 + 右子树的节点数 + 根节点数(1)
 int TreeSize(BinTNode* root) {
 	if (root == NULL)
 		return 0;
-	return TreeSize(root->left) + TreeSize(root->right) + 1;
+	return TreeSize(root->left) 
+		+ TreeSize(root->right) + 1;
 }
+// 以下是简略写法
+//int TreeSize(BinTNode* root) {
+//	return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
+//}
 
+// 传入外部的size，线程安全的写法
 void TreeSize1(BinTNode* root, int* psize) {
 	if (root == NULL)
 		return;
 	++(*psize);
 	TreeSize1(root->left, psize);
 	TreeSize1(root->right, psize);
+}
+
+// 2 全局变量的写法
+void TreeSize2(BinTNode* root) {
+	if (root == NULL)
+		return;
+	++g_size;
+	TreeSize(root->left);
+	TreeSize(root->right);
+}
+
+// 求树的高度，只需要返回左右子树中高度最大的那个，再加一
+int TreeHeight(BinTNode* root) {
+	if (root == NULL)
+		return 0;
+	int leftHeight = TreeHeight(root->left);
+	int rightHeight = TreeHeight(root->right);
+	return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
+}
+// 求第K层的节点的个数
+int TreeKLevel(BinTNode* root, int k) {
+
 }

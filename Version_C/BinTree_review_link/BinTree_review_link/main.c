@@ -11,6 +11,7 @@ void test_Order() {
 }
 void testSize() {
 	BinTNode* root = CreatTree();
+
 	int size = 0;
 	TreeSize1(root, &size);
 	printf("%d\n", size);
