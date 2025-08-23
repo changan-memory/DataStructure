@@ -41,3 +41,5 @@ int TreeHeight(BinTNode* root);
 int TreeKLevel(BinTNode* root, int k);
 // 查找一个数据在不在树中，返回对应的结点
 BinTNode* BinTFind(BinTNode* root, BTDataType data);
+// 层序遍历 可以使用队列，上一层出队列时，下一层入队列
+void LevelOrder(BinTNode* root);

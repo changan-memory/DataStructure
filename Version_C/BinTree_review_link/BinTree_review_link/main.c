@@ -37,13 +37,18 @@ void test_TreeFind() {
 	assert(pNode);
 	printf("%d   %p\n", pNode->data, pNode);
 }
+void test_LevelOrder() {
+	BinTNode* root = CreatTree();
+	LevelOrder(root);
+}
 int main() {
 	//test_Order();
 	//testSize1();
 	//testSize2();
 	//test_TreeHeight();
 	//test_TreeLevel();
-	test_TreeFind();
+	//test_TreeFind();
+	test_LevelOrder();
 
 	return 0;
 }

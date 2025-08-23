@@ -1,5 +1,5 @@
 #include "BinTree.h"
-
+#include "Queue.h"
 
 // 创建树的结点
 BinTNode* BuyNode(BTDataType data) {
@@ -142,4 +142,21 @@ BinTNode* BinTFind(BinTNode* root, BTDataType data) {
 		return rightRes;
 	// 一棵子树的左右子树都没找到，返回 NULL 给上层栈帧
 	return NULL;
+}
+// 层序遍历
+void LevelOrder(BinTNode* root) {
+	Queue q;
+	QueueInit(&q);
+	if (root)
+		QueuePush(&q, root);
+	while (!QueueEmpty(&q)) {
+		BinTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		printf("%d ", front->data);
+		if(front->left)
+			QueuePush(&q, front->left);
+		if (front->right)
+			QueuePush(&q, front->right);
+	}
+	QueueDestroy(&q);
 }
