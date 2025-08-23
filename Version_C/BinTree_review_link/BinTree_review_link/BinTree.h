@@ -39,3 +39,5 @@ void TreeSize2(BinTNode* root);
 int TreeHeight(BinTNode* root);
 // 求第k层的结点个数
 int TreeKLevel(BinTNode* root, int k);
+// 查找一个数据在不在树中，返回对应的结点
+BinTNode* BinTFind(BinTNode* root, BTDataType data);

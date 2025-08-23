@@ -22,7 +22,7 @@ BinTNode* CreatTree() {
 	BinTNode* node4 = BuyNode(4);
 	BinTNode* node5 = BuyNode(5);
 	BinTNode* node6 = BuyNode(6);
-	BinTNode* node7 = BuyNode(6);
+	BinTNode* node7 = BuyNode(7);
 	// 建立链接关系
 	node1->left = node2;
 	node1->right = node4;
@@ -125,4 +125,21 @@ int TreeKLevel(BinTNode* root, int k) {
 	int leftNum = TreeKLevel(root->left, k - 1);
 	int rightNum = TreeKLevel(root->right, k - 1);
 	return leftNum + rightNum;
+}
+
+BinTNode* BinTFind(BinTNode* root, BTDataType data) {
+	if (root == NULL)
+		return NULL;
+	if (root->data == data)
+		return root;
+	//在左子树中找
+	BinTNode* leftRes = BinTFind(root->left, data);
+	if (leftRes)
+		return leftRes;
+	//在右子树中找
+	BinTNode* rightRes = BinTFind(root->right, data);
+	if (rightRes)
+		return rightRes;
+	// 一棵子树的左右子树都没找到，返回 NULL 给上层栈帧
+	return NULL;
 }
