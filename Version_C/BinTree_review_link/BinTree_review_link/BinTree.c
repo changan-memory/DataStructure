@@ -23,13 +23,24 @@ BinTNode* CreatTree() {
 	BinTNode* node5 = BuyNode(5);
 	BinTNode* node6 = BuyNode(6);
 	BinTNode* node7 = BuyNode(7);
-	// 建立链接关系
-	node1->left = node2;
+	// 建立链接关系 该链接关系为 非完全二叉树
+	/*node1->left = node2;
 	node1->right = node4;
 	node2->left = node3;
 	node4->left = node5;
 	node4->right = node6;
 	node3->right = node7;
+	return node1;*/
+
+	//// 更改链接关系，使其成为完全二叉树
+	BinTNode* node8 = BuyNode(8);
+	node1->left = node2;
+	node1->right = node3;
+	node2->left = node4;
+	node2->right = node5;
+	node3->left = node6;
+	node3->right = node7;
+	node4->left = node8;
 	return node1;
 }
 
@@ -159,4 +170,43 @@ void LevelOrder(BinTNode* root) {
 			QueuePush(&q, front->right);
 	}
 	QueueDestroy(&q);
+	printf("\n");
+}
+
+// 判断是否为 完全二叉树
+bool BinTreeComplete(BinTNode* root) {
+	Queue q;
+	QueueInit(&q);
+	if (root)
+		QueuePush(&q, root);
+	while (!QueueEmpty(&q)) {
+		BinTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		if (front == NULL)
+			break;
+		else {
+			QueuePush(&q, front->left);
+			QueuePush(&q, front->right);
+		}
+	}
+	// 判断 NULL 之后 是否还有 非空结点
+	while (!QueueEmpty(&q)) {
+		BinTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		// 如果非空 说明非空节点不是完全连续
+		if (front) {
+			QueueDestroy(&q);
+			return false;
+		}
+	}
+	QueueDestroy(&q);
+	return true;
+}
+
+void BinTreeDestroy(BinTNode* root){
+	if (!root)
+		return;
+	BinTreeDestroy(root->left);
+	BinTreeDestroy(root->right);
+	free(root);
 }

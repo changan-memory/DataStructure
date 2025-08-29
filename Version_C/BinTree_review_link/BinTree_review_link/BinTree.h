@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdbool.h>
 
 // 数据类型重定义
 typedef int BTDataType;
@@ -31,10 +32,14 @@ int g_size;
 
 // 求二叉树的结点的个数
 int TreeSize(BinTNode* root);
+
+
 // 外部变量的指针的写法
 void TreeSize1(BinTNode* root, int* psize);
 // 全局变量的写法
 void TreeSize2(BinTNode* root);
+
+
 // 求数的高度
 int TreeHeight(BinTNode* root);
 // 求第k层的结点个数
@@ -43,3 +48,10 @@ int TreeKLevel(BinTNode* root, int k);
 BinTNode* BinTFind(BinTNode* root, BTDataType data);
 // 层序遍历 可以使用队列，上一层出队列时，下一层入队列
 void LevelOrder(BinTNode* root);
+
+// 判断一棵树 是否是 完全二叉树
+// 完全二叉树  所有的非空结点  按照层序遍历，非空结点一定是连续的
+bool BinTreeComplete(BinTNode* root);
+
+// 销毁一颗二叉树
+void BinTreeDestroy(BinTNode* root);

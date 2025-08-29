@@ -41,6 +41,16 @@ void test_LevelOrder() {
 	BinTNode* root = CreatTree();
 	LevelOrder(root);
 }
+void test_TreeComplete() {
+	BinTNode* root = CreatTree();
+	bool res = BinTreeComplete(root);
+	if(res)
+		printf("is TreeComplete\n");
+	else
+		printf("is not TreeComplete\n");
+	BinTreeDestroy(root);
+	root = NULL;
+}
 int main() {
 	//test_Order();
 	//testSize1();
@@ -48,8 +58,8 @@ int main() {
 	//test_TreeHeight();
 	//test_TreeLevel();
 	//test_TreeFind();
-	test_LevelOrder();
-
+	//test_LevelOrder();
+	test_TreeComplete();
 	return 0;
 }
 
