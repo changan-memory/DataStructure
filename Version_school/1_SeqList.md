@@ -1,6 +1,65 @@
+# åŠ¨æ€é¡ºåºè¡¨
+
+
+
+# å¤´æ–‡ä»¶
+
+```cpp
+#pragma once
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <stdbool.h>
+#include <string.h>
+
+#define INIT_CAPACITY 4
+
+typedef int SLDataType;
+
+typedef struct SeqList {
+	SLDataType* base;
+	int size;
+	int capacity;
+}SeqList;
+
+// åˆå§‹åŒ–ä¸é”€æ¯
+bool SeqListInit(SeqList& L);
+void SeqListDestroy(SeqList& L);
+
+// æ£€æŸ¥æ˜¯å¦éœ€è¦æ‰©å®¹ï¼Œå¹¶æ‰©å®¹
+bool CheckCapacity(SeqList& L);
+
+// å°¾æ’ä¸å°¾åˆ 
+void PushBack(SeqList& L, SLDataType val);
+void PopBack(SeqList& L);
+
+// å¤´æ’ä¸å¤´åˆ 
+void PushFront(SeqList& L, SLDataType val);
+void PopFront(SeqList& L);
+
+// åˆæ³•ä½ç½®æ’å…¥ä¸åˆ é™¤
+void SeqListInsert(SeqList& L, int pos, SLDataType val);
+void SeqListErase(SeqList& L, int pos);
+
+// size ä¸ capacity è·å–
+int Size(const SeqList& L);
+int Capacity(const SeqList& L);
+
+// æŸ¥æ‰¾å€¼ä¸º val çš„å…ƒç´ ï¼Œè¿”å›å¯¹åº”ä¸‹æ ‡ï¼Œæ‰¾ä¸åˆ°è¿”å› -1
+int SeqListFind(const SeqList& L, SLDataType val);
+// éå†æ‰“å°å…ƒç´ 
+void SeqListPrint(const SeqList& L);
+```
+
+
+
+# æºæ–‡ä»¶
+
+```cpp
 #include "SeqList.h"
 
-// ³õÊ¼»¯¿Õ¼ä  ÉèÖÃ³õÊ¼×´Ì¬
+// åˆå§‹åŒ–ç©ºé—´  è®¾ç½®åˆå§‹çŠ¶æ€
 bool SeqListInit(SeqList& L) {
 	L.base = (SLDataType*)malloc(sizeof(SLDataType) * INIT_CAPACITY);
 	if (L.base == NULL) {
@@ -12,7 +71,7 @@ bool SeqListInit(SeqList& L) {
 	return true;
 }
 
-// Ïú»Ù
+// é”€æ¯
 void SeqListDestroy(SeqList& L) {
 	if (L.base) {
 		free(L.base);
@@ -23,16 +82,16 @@ void SeqListDestroy(SeqList& L) {
 
 bool CheckCapacity(SeqList& L) {
 	if (L.size == L.capacity) {
-		// ¿ª¿Õ¼ä
-		//int newCap = (L.capacity == 0 ? INIT_CAPACITY : L.capacity * 2); // ³õÊ¼»¯ºócapacity²»¿ÉÄÜÎª0
+		// å¼€ç©ºé—´
+		//int newCap = (L.capacity == 0 ? INIT_CAPACITY : L.capacity * 2); // åˆå§‹åŒ–åcapacityä¸å¯èƒ½ä¸º0
 		SLDataType* newSpace = (SLDataType*)malloc(sizeof(SLDataType) * L.capacity * 2);
 		if (newSpace == NULL) {
 			perror("malloc failed");
 			return false;
 		}
-		// ¿½±´Êı¾İ  ½öÄÜ¿½±´ÎŞ¶¯Ì¬×ÊÔ´µÄÀàĞÍ
+		// æ‹·è´æ•°æ®  ä»…èƒ½æ‹·è´æ— åŠ¨æ€èµ„æºçš„ç±»å‹
 		memcpy(newSpace, L.base, sizeof(SLDataType) * L.size);
-		// ¸üĞÂ×´Ì¬
+		// æ›´æ–°çŠ¶æ€
 		free(L.base);
 		L.base = newSpace;
 		L.capacity *= 2;
@@ -42,7 +101,7 @@ bool CheckCapacity(SeqList& L) {
 }
 
 void PushBack(SeqList& L, SLDataType val) {
-	// ¼ì²éÀ©Èİ
+	// æ£€æŸ¥æ‰©å®¹
 	if(L.size == L.capacity)
 		CheckCapacity(L);
 	L.base[L.size++] = val;
@@ -57,16 +116,16 @@ void PopBack(SeqList& L) {
 }
 
 void PushFront(SeqList& L, SLDataType val) {
-	// ¼ì²éÀ©Èİ
+	// æ£€æŸ¥æ‰©å®¹
 	if (L.size == L.capacity)
 		CheckCapacity(L);
-	// Å²¶¯ÔªËØ
+	// æŒªåŠ¨å…ƒç´ 
 	int end = L.size - 1;
 	while (end >= 0) {
 		L.base[end + 1] = L.base[end];
 		--end;
 	}
-	// ²åÈë
+	// æ’å…¥
 	L.base[end + 1] = val;
 	++L.size;
 }
@@ -77,24 +136,24 @@ void PopFront(SeqList& L) {
 		L.base[begin] = L.base[begin + 1];
 		++begin;
 	}
-	// ¸üĞÂ×´Ì¬
+	// æ›´æ–°çŠ¶æ€
 	--L.size;
 }
 
 void SeqListInsert(SeqList& L, int pos, SLDataType val) {
-	// ¼ì²é²åÈëÎ»ÖÃ
+	// æ£€æŸ¥æ’å…¥ä½ç½®
 	assert(pos >= 0 && pos <= L.size);
 
-	// ¼ì²éÀ©Èİ
+	// æ£€æŸ¥æ‰©å®¹
 	if (L.size == L.capacity)
 		CheckCapacity(L);
-	// Å²¶¯ÔªËØ
+	// æŒªåŠ¨å…ƒç´ 
 	int end = L.size - 1;
 	while (end >= pos) {
 		L.base[end + 1] = L.base[end];
 		--end;
 	}
-	// ²åÈëÔªËØ
+	// æ’å…¥å…ƒç´ 
 	L.base[pos] = val;
 	++L.size;
 }
@@ -109,7 +168,7 @@ void SeqListErase(SeqList& L, int pos) {
 	--L.size;
 }
 
-// size Óëcapacity
+// size ä¸capacity
 int Size(const SeqList& L) {
 	return L.size;
 }
@@ -134,3 +193,5 @@ void SeqListPrint(const SeqList& L) {
 		printf("%d ", L.base[i]);
 	printf("\n");
 }
+```
+
