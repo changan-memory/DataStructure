@@ -14,6 +14,11 @@ void TestPushPopBack(){
 
 	PopBack(L);
 	PopBack(L);
+	PopBack(L);
+	PopBack(L);
+	SeqListPrint(L);
+	PopBack(L);
+	PopBack(L);
 	SeqListPrint(L);
 	SeqListDestroy(L);
 }
@@ -30,13 +35,38 @@ void TestPushPopFront() {
 
 	PopFront(L);
 	PopFront(L);
+	PopFront(L);
+	PopFront(L);
+	SeqListPrint(L);
+
+	PopFront(L);
+	PopFront(L);
 	SeqListPrint(L);
 	
 	SeqListDestroy(L);
 }
+void TestInsertErase() {
+	SeqList L;
+	SeqListInit(L);
+	SeqListInsert(L, 0, 1);
+	SeqListInsert(L, 1, 2);
+	SeqListInsert(L, 2, 3);
+	SeqListInsert(L, L.size, 4);
+	SeqListPrint(L);
+
+	SeqListErase(L, 0);
+	SeqListErase(L, L.size - 1);
+	SeqListErase(L, 1);
+	SeqListPrint(L);
+
+	SeqListDestroy(L);
+
+}
 int main() {
-	TestPushPopBack();
+	//TestPushPopBack();
 	//TestPushPopFront();
+	TestInsertErase();
+
 
 	return 0;
 }
