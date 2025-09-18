@@ -29,16 +29,14 @@ void TestFront() {
 	SLTPushFront(head, 6);
 	SLTPrint(head);
 
-	SLTPopBack(head);
-	SLTPopBack(head);
+	SLTPopFront(head);
+	SLTPopFront(head);
 	SLTPrint(head);
-	SLTPopBack(head);
-	SLTPopBack(head);
-	SLTPopBack(head);
-	SLTPrint(head);
+	SLTPopFront(head);
+	SLTPopFront(head);
+	SLTPopFront(head);
+	SLTPopFront(head);
 
-	SLTPopBack(head);
-	SLTPopBack(head);
 	SLTPrint(head);
 }
 

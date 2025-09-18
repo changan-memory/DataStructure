@@ -77,5 +77,12 @@ void SLTPushFront(Node*& head, SLTDataType val) {
 	}
 }
 void SLTPopFront(Node*& head) {
+	assert(head);
+	Node* delNode = head;
 
+	head = head->next;
+	delNode->next = NULL;
+
+	free(delNode);
+	delNode = NULL;
 }
