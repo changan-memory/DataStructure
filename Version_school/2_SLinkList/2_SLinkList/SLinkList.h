@@ -27,3 +27,14 @@ void SLTPopBack(Node*& head);
 // 头插头删
 void SLTPushFront(Node*& head, SLTDataType val);
 void SLTPopFront(Node*& head);
+
+// 单链表的查找   查找值，返回指针
+Node* SLTFind(Node* head, SLTDataType val); 
+
+// 在pos之前插入结点    删除pos位置的结点
+void SLTInsert(Node* head, Node* pos, SLTDataType val);
+void SLTErase(Node* head, Node* pos);
+
+// pos后面插入   删除pos后面的结点
+void SLTInsertAfter(Node* pos, SLTDataType val);
+void SLTEraseAfter(Node* pos);

@@ -24,10 +24,7 @@ Node* BuySLTNode(SLTDataType val) {
 void SLTPushBack(Node*& head, SLTDataType val) {
 	// 创建节点
 	Node* newNode = BuySLTNode(val);
-	if (newNode == NULL) {
-		perror("malloc failed");
-		return;
-	}
+
 	// 插入节点
 	if (head == NULL) {
 		head = newNode;
@@ -64,10 +61,7 @@ void SLTPopBack(Node*& head) {
 void SLTPushFront(Node*& head, SLTDataType val) {
 	// 创建节点
 	Node* newNode = BuySLTNode(val);
-	if (newNode == NULL) {
-		perror("malloc fail");
-		return;
-	}
+
 	// 插入节点
 	if (head == NULL)
 		head = newNode;
@@ -83,6 +77,54 @@ void SLTPopFront(Node*& head) {
 	head = head->next;
 	delNode->next = NULL;
 
+	free(delNode);
+	delNode = NULL;
+}
+
+
+Node* SLTFind(Node* head, SLTDataType val) {
+	if (head == NULL)
+		return NULL;
+	Node* curNode = head;
+	while (curNode) {
+		if (curNode->val == val)
+			return curNode;
+		else
+			curNode = curNode->next;
+	}
+	return NULL;
+}
+
+// 在pos之前插入结点 
+void SLTInsert(Node*& head, Node* pos, SLTDataType val) {
+	assert(pos);
+	assert(head);
+
+
+}
+// 删除pos位置的结点
+void SLTErase(Node*& head, Node* pos) {
+	assert(pos);
+
+}
+
+
+
+// pos后面插入   
+void SLTInsertAfter(Node* pos, SLTDataType val) {
+	assert(pos);
+	Node* newNode = BuySLTNode(val);
+	// 先连上，再断开
+	newNode->next = pos->next;
+	pos->next = newNode;
+}
+
+// 删除pos后面的结点
+void SLTEraseAfter(Node* pos) {
+	assert(pos);
+	assert(pos->next);
+	Node* delNode = pos->next;
+	pos->next = delNode->next;
 	free(delNode);
 	delNode = NULL;
 }
