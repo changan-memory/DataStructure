@@ -99,13 +99,48 @@ Node* SLTFind(Node* head, SLTDataType val) {
 void SLTInsert(Node*& head, Node* pos, SLTDataType val) {
 	assert(pos);
 	assert(head);
+	// 头插
+	if (pos == head) {
+		SLTPushFront(head, val);
+	}
+	else {
+		// 非头插
+		Node* prevPos = NULL;
+		Node* curNode = head;
+		while (curNode != pos) {
+			prevPos = curNode;
+			curNode = curNode->next;
+		}
+		assert(curNode == pos);
 
-
+		Node* newNode = BuySLTNode(val);
+		prevPos->next = newNode;
+		newNode->next = pos;
+	}
 }
 // 删除pos位置的结点
 void SLTErase(Node*& head, Node* pos) {
 	assert(pos);
-
+	assert(head);
+	// 头删
+	if (pos == head) {
+		SLTPopFront(head);
+		return;
+	}
+	else {
+		// 非头删
+		Node* prevPos = NULL;
+		Node* curNode = head;
+		while (curNode != pos) {
+			prevPos = curNode;
+			curNode = curNode->next;
+		}
+		assert(curNode == pos); // 确保pos在链表中
+		// 改链接关系
+		prevPos->next = pos->next;
+		free(pos);
+		pos = NULL;
+	}
 }
 
 
