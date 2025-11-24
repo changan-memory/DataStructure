@@ -34,14 +34,15 @@ void insertSort(int* arr, int size)
 // gap 越大，跳的越快，就越不接近有序
 // 先排三组中的第一组，再排三组的第二组
 // gap > 1 
+// 可以认为希尔排序的 时间复杂度为 O(n^1.3)
 void shellSort(int* arr, int size)
 {
 	int gap = size;
 	
 	while (gap > 1)
 	{
-		gap /= 2;
-		// gap = gap / 3 + 1;
+		//gap /= 2;
+		gap = gap / 3 + 1;
 		
 		// 跳跃插入排序    把 gap 换成 1，就是直接插入排序
 		for (int i = 0; i < size - gap; ++i)
@@ -75,20 +76,21 @@ void shellSort_1(int* arr, int size)
 
 	while (gap > 1)
 	{
-		gap /= 2;
+		//gap /= 2;
+		gap = gap / 3 + 1;
 
 		// 多组 跳跃插入排序   gap 是几，就被分成了几组
 		for (int j = 0; j < gap; j++)
 		{
-			// 一组 跳跃插入排序    把 gap 换成 1，就是直接插入排序
-			for (int i = j; i < size - gap; i += gap)
+			// 从组内的下个数开始进行预插入排序
+			for (int i = j + gap; i < size; i += gap)
 			{
 				// 希尔排序的预排序逻辑
 				// 只是将 直接插入排序中的 一步一步跳，改成了一次跳 gap 步
-				int end = i;					// 当前组中  有序部分的 最后一个数的下标
-				int tmp = arr[end + gap];		// 当前组中  接下来要进行插入 排序 的数
+				int tmp = arr[i];			// 当前组中  接下来要进行插入 排序 的数
+				int end = i - gap;			// 当前组中  有序部分的 最后一个数的下标
 
-				while (end >= 0)
+				while (end >= j)			// 当前组中 第一个数的下标
 				{
 					if (tmp >= arr[end])
 					{
@@ -104,4 +106,231 @@ void shellSort_1(int* arr, int size)
 			}
 		}
 	}
+}
+
+
+void Swap(int* x, int* y)
+{
+	int tmp = *x;
+	*x = *y;
+	*y = tmp;
+}
+
+// 直接选择排序
+void SelectSort(int* arr, int size)
+{
+	// 对第 j 个位置，找出合适的数放在这里
+	for (int j = 0; j < size; ++j)
+	{
+		// 找数的过程，在 [j, size - 1] 区间中找数
+		int minIndex = j;	
+		for (int i = j + 1; i <= size - 1; ++i)
+		{
+			if (arr[i] < arr[minIndex])
+				minIndex = i;
+		}
+		// 找到了比 minIndex 更小的数  再交换
+		if (minIndex != j)
+			Swap(&arr[minIndex], &arr[j]);
+	}
+}
+
+
+// 优化版本   遍历一遍可以 同时找出 最小值和最大值
+// 最好 O(N^2)
+// 最坏 O(N^2)
+void selectSort(int* arr, int size)
+{
+	int left = 0, right = size - 1;
+
+	while (left < right)
+	{
+		// 找区间 [left, right] 中的最大值和最小值
+		int minIndex = left, maxIndex = left;
+		for (int i = left + 1; i <= right; ++i)
+		{
+			if (arr[i] < arr[minIndex])
+				minIndex = i;
+			if (arr[i] > arr[maxIndex])
+				maxIndex = i;
+		}
+		Swap(&arr[left], &arr[minIndex]);
+		if (left == maxIndex)
+			maxIndex = minIndex;
+		Swap(&arr[right], &arr[maxIndex]);
+		++left;
+		--right;
+	}
+}
+
+// 最坏  O(N^2)
+// 最好  O(N)
+void bubbleSort(int* arr, int size)
+{
+	for (int j = 0; j < size; ++j)
+	{
+		// 单趟冒泡排序
+		for (int i = 1; i < size - j; ++i)
+		{
+			if (arr[i - 1] > arr[i])
+				Swap(&arr[i - 1], &arr[i]);
+		}
+	}
+}
+
+// 冒泡排序的优化，如果一趟排序中，没有发生一次交换，那么代表已经有序，无需再进行排序
+void bubbleSort_1(int* arr, int size)
+{
+	for (int j = 0; j < size; ++j)
+	{
+		bool exchange = false;
+		// 单趟冒泡排序
+		for (int i = 1; i < size - j; ++i)
+		{
+			if (arr[i - 1] > arr[i])
+			{
+				Swap(&arr[i - 1], &arr[i]);
+				exchange = true;
+			}
+		}
+		// 检查有无发生交换  没有交换，就提前结束
+		if (!exchange)
+			break;
+	}
+}
+
+
+// 闭区间
+void quickSort(int* arr, int left, int right)
+{
+	// 递归结束条件   仅剩一个元素时，就结束,
+	// 不能用 left == right 
+	// 因为传参时传的是 right = keyi -1 ，可能上次调用后，keyi 为0，传下去 right 就是-1了
+	// 而 left 总是为 0
+
+	// 区间中仅有一个元素(left == right)  或 区间不存在(left > right)   时，就结束递归
+ 	if (left >= right)
+		return;
+	
+	// 左边的值做 key 时，右边要先走  这样可以保证，相遇位置一定比 key 小
+	int begin = left, end = right;
+	int keyi = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)		
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= arr[keyi])	// 找到右侧第一个比 key 小的数
+			--end;
+
+		while (begin < end && arr[begin] <= arr[keyi])	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		Swap(&arr[begin], &arr[end]);
+		/*--end;
+		++begin;*/
+	}
+	Swap(&arr[keyi], &arr[end]);
+	keyi = end;	
+
+	// [begin, keyi - 1]  keyi  [keyi+1, end]  两个区间 递归
+	quickSort(arr, left, keyi - 1);
+	quickSort(arr, keyi + 1, right);
+}
+// 快排的性能分析    
+// 认为 快排的时间复杂度为 O(N*logN)
+// 最好 O(N*logN)	keyi 每次递归 越接近中间，性能越好 即: 数据越乱，快排效率越高
+// 最坏 O(N*N)    数据已经有序(已升序或降序)
+// 通过以上分析，可以通过  选取合适的 key 来提高快排的性能
+
+void quickSort_1(int* arr, int left, int right)
+{
+	// 区间中仅有一个元素(left == right)  或 区间不存在(left > right)   时，就结束递归
+	if (left >= right)
+		return;
+
+	// 左边的值做 key 时，右边要先走  这样可以保证，相遇位置一定比 key 小
+	int begin = left, end = right;
+	int randi = left + (rand() % (right - left + 1));
+	Swap(&arr[left], &arr[randi]);	// 随机的下标，就是随机数做 key
+
+	int keyi = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= arr[keyi])	// 找到右侧第一个比 key 小的数
+			--end;
+
+		while (begin < end && arr[begin] <= arr[keyi])	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		Swap(&arr[begin], &arr[end]);
+	}
+	Swap(&arr[keyi], &arr[end]);
+	keyi = end;
+
+	// [begin, keyi - 1]  keyi  [keyi+1, end]  两个区间 递归
+	quickSort(arr, left, keyi - 1);
+	quickSort(arr, keyi + 1, right);
+}
+
+// 优化方案二  left  mid  right  三个数取出不大不小的那个数  作为中间值
+int getMidNumi(int* arr, int left, int right)
+{
+	int mid = (left + right) / 2;
+
+	int a = arr[left];
+	int b = arr[mid];
+	int c = arr[right];
+
+	// 判断 b 是否是中间值
+	if ((a <= b && b <= c) || (c <= b && b <= a))
+		return mid;
+
+	// 判断 a 是否是中间值
+	if ((b <= a && a <= c) || (c <= a && a <= b))
+		return left;
+
+	// 否则 c 为中间值
+	return right;
+}
+
+void quickSort_2(int* arr, int left, int right)
+{
+	// 区间中仅有一个元素(left == right)  或 区间不存在(left > right)   时，就结束递归
+	if (left >= right)
+		return;
+
+	// 优化方案二 三数取中
+	int begin = left, end = right;
+
+	int midi = getMidNumi(arr, left, right);
+	if (midi != left)
+		Swap(&arr[midi], &arr[left]);
+
+	int keyi = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= arr[keyi])	// 找到右侧第一个比 key 小的数
+			--end;
+
+		while (begin < end && arr[begin] <= arr[keyi])	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		Swap(&arr[begin], &arr[end]);
+	}
+	Swap(&arr[keyi], &arr[end]);
+	keyi = end;
+
+	// [begin, keyi - 1]  keyi  [keyi+1, end]  两个区间 递归
+	quickSort(arr, left, keyi - 1);
+	quickSort(arr, keyi + 1, right);
 }
