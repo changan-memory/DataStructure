@@ -65,7 +65,8 @@ void testQuickSort()
 	//int arr[] = { 9, 8, 7, 6, 5 ,4};
 
 	printArray(arr, sizeof(arr) / sizeof(arr[0]));
-	quickSort_1(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
+	qucikSort_partition(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
+	//partition_4(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
 	printArray(arr, sizeof(arr) / sizeof(arr[0]));
 }
 
@@ -74,7 +75,7 @@ void testQuickSort()
 void TestOP()
 {
 	srand(time(0));
-	const int N = 100000;
+	const int N = 1000000;
 	int* a1 = (int*)malloc(sizeof(int) * N);
 	int* a2 = (int*)malloc(sizeof(int) * N);
 	int* a3 = (int*)malloc(sizeof(int) * N);
@@ -111,9 +112,10 @@ void TestOP()
 	int end4 = clock();
 
 	int begin5 = clock();
-	//quickSort(a2, 0, N - 1);
-	//quickSort_1(a2, 0, N - 1);
-	//quickSort_2(a2, 0, N - 1);
+	//quickSort(a5, 0, N - 1);
+	//quickSort_1(a5, 0, N - 1);
+	//quickSort_2(a5, 0, N - 1);
+	quickSort_3(a2, 0, N - 1);
 	int end5 = clock();
 
 	int begin6 = clock();
@@ -146,8 +148,8 @@ int main()
 	//testSelectSort();
 	//testBubbleSort();
 
-	//testQuickSort();
+	testQuickSort();
 
-	TestOP();
+	//TestOP();
 	return 0;
 }

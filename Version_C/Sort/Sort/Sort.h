@@ -26,8 +26,18 @@ void selectSort(int* arr, int size);
 void bubbleSort(int* arr, int size);
 
 // 快速排序
-void quickSort(int* arr, int left, int right);
+void quickSort(int* arr, int left, int right);		// 原始快排
 void quickSort_1(int* arr, int left, int right);	// 使用随机的 key 优化快排性能
 void quickSort_2(int* arr, int left, int right);	// 使用三数取中作为 key 优化快排性能
+void quickSort_3(int* arr, int left, int right);	// 快排的挖坑法
 
+// 以下四个 partition 函数是将 以上快排中 单趟排序的逻辑抽象出来
+int partition(int* arr, int left, int right);		// 原始单趟快排
+int partition_1(int* arr, int left, int right);		// 使用随机的 key 优化快排性能
+int partition_2(int* arr, int left, int right);		// 使用三数取中作为 key 优化快排性能
+int partition_3(int* arr, int left, int right);		// 快排的挖坑法
+int partition_4(int* arr, int left, int right);		// 双指针数组分区法
+
+void qucikSort_partition(int* arr, int left, int right);
+	
 

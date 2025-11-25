@@ -1,8 +1,5 @@
-﻿  main.c
+﻿E:\VisualStudio2022\VS_exe\MSBuild\Microsoft\VC\v170\Microsoft.CppClean.targets(77,5): warning : 对路径“e:\a_code\a_github\datastructure\version_c\sort\x64\release\sort.exe”的访问被拒绝。
+  main.c
 E:\A_Code\A_github\DataStructure\Version_C\Sort\Sort\main.c(76,8): warning C4244: “函数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-  正在生成代码
-  2 of 9 functions (22.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  已完成代码的生成
-  Sort.vcxproj -> E:\A_Code\A_github\DataStructure\Version_C\Sort\x64\Release\Sort.exe
+  Sort.c
+LINK : fatal error LNK1104: 无法打开文件“E:\A_Code\A_github\DataStructure\Version_C\Sort\x64\Release\Sort.exe”

@@ -216,7 +216,8 @@ void quickSort(int* arr, int left, int right)
 	int begin = left, end = right;
 	int keyi = left;
 
-	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	// 因为 
+	// 右边先走，右边先在 第一个比 key 小的数 那里停下，就能保证 begin 和 end 相遇的值 一定比 key 要小
 	while (begin < end)		
 	{
 		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
@@ -274,8 +275,8 @@ void quickSort_1(int* arr, int left, int right)
 	keyi = end;
 
 	// [begin, keyi - 1]  keyi  [keyi+1, end]  两个区间 递归
-	quickSort(arr, left, keyi - 1);
-	quickSort(arr, keyi + 1, right);
+	quickSort_1(arr, left, keyi - 1);
+	quickSort_1(arr, keyi + 1, right);
 }
 
 // 优化方案二  left  mid  right  三个数取出不大不小的那个数  作为中间值
@@ -331,6 +332,205 @@ void quickSort_2(int* arr, int left, int right)
 	keyi = end;
 
 	// [begin, keyi - 1]  keyi  [keyi+1, end]  两个区间 递归
-	quickSort(arr, left, keyi - 1);
-	quickSort(arr, keyi + 1, right);
+	quickSort_2(arr, left, keyi - 1);
+	quickSort_2(arr, keyi + 1, right);
 }
+
+// 快排的 挖坑法
+// 相遇时一定相遇在 坑的位置，因为，坑要么在左边，要么在右边，相遇时，就在坑的位置
+void quickSort_3(int* arr, int left, int right)
+{
+	// 区间中仅有一个元素(left == right)  或 区间不存在(left > right)   时，就结束递归
+	if (left >= right)
+		return;
+
+	int begin = left, end = right;
+
+	/*int midi = getMidNumi(arr, left, right);
+	if (midi != left)
+		Swap(&arr[midi], &arr[left]);*/
+
+	int key = arr[begin];
+	int hole = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= key)	// 找到右侧第一个比 key 小的数
+			--end;
+
+		arr[hole] = arr[end];	// 入坑
+		hole = end;				// 更新坑
+
+		while (begin < end && arr[begin] <= key)	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		arr[hole] = arr[begin];	// 入坑
+		hole = begin;				// 更新坑
+	}
+	arr[hole] = key;
+	// [begin, hole - 1]  hole  [hole+1, end]  两个区间 递归
+	quickSort_3(arr, left, hole - 1);
+	quickSort_3(arr, hole + 1, right);
+}
+
+
+int partition(int* arr, int left, int right)
+{
+	// 左边的值做 key 时，右边要先走  这样可以保证，相遇位置一定比 key 小
+	int begin = left, end = right;
+	int keyi = left;
+
+	// 因为 
+	// 右边先走，右边先在 第一个比 key 小的数 那里停下，就能保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= arr[keyi])	// 找到右侧第一个比 key 小的数
+			--end;
+
+		while (begin < end && arr[begin] <= arr[keyi])	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		Swap(&arr[begin], &arr[end]);
+	}
+	Swap(&arr[keyi], &arr[end]);
+	keyi = end;
+
+	return keyi;
+}
+
+// 快排的性能分析    
+// 认为 快排的时间复杂度为 O(N*logN)
+// 最好 O(N*logN)	keyi 每次递归 越接近中间，性能越好 即: 数据越乱，快排效率越高
+// 最坏 O(N*N)    数据已经有序(已升序或降序)
+// 通过以上分析，可以通过  选取合适的 key 来提高快排的性能
+
+int partition_1(int* arr, int left, int right)
+{
+	// 左边的值做 key 时，右边要先走  这样可以保证，相遇位置一定比 key 小
+	int begin = left, end = right;
+	int randi = left + (rand() % (right - left + 1));
+	Swap(&arr[left], &arr[randi]);	// 随机的下标，就是随机数做 key
+
+	int keyi = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= arr[keyi])	// 找到右侧第一个比 key 小的数
+			--end;
+
+		while (begin < end && arr[begin] <= arr[keyi])	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		Swap(&arr[begin], &arr[end]);
+	}
+	Swap(&arr[keyi], &arr[end]);
+	keyi = end;
+
+	return keyi;
+}
+
+int partition_2(int* arr, int left, int right)
+{
+	// 优化方案二 三数取中
+	int begin = left, end = right;
+
+	int midi = getMidNumi(arr, left, right);
+	if (midi != left)
+		Swap(&arr[midi], &arr[left]);
+
+	int keyi = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= arr[keyi])	// 找到右侧第一个比 key 小的数
+			--end;
+
+		while (begin < end && arr[begin] <= arr[keyi])	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		Swap(&arr[begin], &arr[end]);
+	}
+	Swap(&arr[keyi], &arr[end]);
+	keyi = end;
+
+	return keyi;
+}
+
+// 快排的 挖坑法
+// 相遇时一定相遇在 坑的位置，因为，坑要么在左边，要么在右边，相遇时，就在坑的位置
+int partition_3(int* arr, int left, int right)
+{
+	int begin = left, end = right;
+
+	int midi = getMidNumi(arr, left, right);
+	if (midi != left)
+		Swap(&arr[midi], &arr[left]);
+
+	int key = arr[begin];
+	int hole = left;
+
+	// 要保证 begin 和 end 相遇的值 一定比 key 要小
+	while (begin < end)
+	{
+		// 防止 基准值是 数组中最小的元素 或者  基准值是 数组中最大的元素  时 飘出去
+		// 当 arr[keyi] 初始是数组中的最小值时，不加 begin < end 的循环条件，end 会减到 -1,造成越界
+		while (begin < end && arr[end] >= key)	// 找到右侧第一个比 key 小的数
+			--end;
+
+		arr[hole] = arr[end];	// 入坑
+		hole = end;				// 更新坑
+
+		while (begin < end && arr[begin] <= key)	// 找到左侧第一个比 key 大的数
+			++begin;
+
+		arr[hole] = arr[begin];	// 入坑
+		hole = begin;				// 更新坑
+	}
+	arr[hole] = key;
+	return hole;
+}
+
+// 快排的双指针法，数组分区
+int partition_4(int* arr, int left, int right)
+{
+	int midi = getMidNumi(arr, left, right);
+	if (midi != left)
+		Swap(&arr[midi], &arr[left]);
+
+	int keyi = left;
+
+	int prev = left, cur = left + 1;
+	while (cur <= right)
+	{
+		if (arr[cur] < arr[keyi])
+			Swap(&arr[++prev], &arr[cur]);
+		
+		++cur;
+	}
+	Swap(&arr[keyi], &arr[prev]);
+	keyi = prev;
+	return keyi;
+}
+
+void qucikSort_partition(int* arr, int left, int right)
+{
+	if (left >= right)
+		return;
+	int keyi = partition_4(arr, left, right);
+	qucikSort_partition(arr, left, keyi - 1);
+	qucikSort_partition(arr, keyi + 1, right);
+}
+
+
+
