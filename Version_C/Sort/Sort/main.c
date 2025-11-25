@@ -65,8 +65,10 @@ void testQuickSort()
 	//int arr[] = { 9, 8, 7, 6, 5 ,4};
 
 	printArray(arr, sizeof(arr) / sizeof(arr[0]));
-	qucikSort_partition(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
+	//qucikSort_partition(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
 	//partition_4(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
+	quickSortNonR(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
+
 	printArray(arr, sizeof(arr) / sizeof(arr[0]));
 }
 

@@ -1,4 +1,5 @@
 #include "Sort.h"
+#include "Stack.h"
 
 // 最坏 O(N^2) 
 // 最好 O(N)
@@ -523,14 +524,71 @@ int partition_4(int* arr, int left, int right)
 	return keyi;
 }
 
-void qucikSort_partition(int* arr, int left, int right)
+void quickSort_partition(int* arr, int left, int right)
 {
 	if (left >= right)
 		return;
 	int keyi = partition_4(arr, left, right);
-	qucikSort_partition(arr, left, keyi - 1);
-	qucikSort_partition(arr, keyi + 1, right);
+	quickSort_partition(arr, left, keyi - 1);
+	quickSort_partition(arr, keyi + 1, right);
+}
+
+// 快排分割区间后，接下来的目标是 让子区间为有序，可以不用快排的方法进行排序
+// 当数组中元素的数量较少时，	可以使用其他排序来使子区间有序
+// 快排的小区间优化
+void quickSort_partition_optimize(int* arr, int left, int right)
+{
+	if (left >= right)
+		return;
+
+	// 小区间优化，小区间直接使用 插入排序
+	if ((right - left + 1) > 16)
+	{
+		int keyi = partition_4(arr, left, right);
+		quickSort_partition(arr, left, keyi - 1);
+		quickSort_partition(arr, keyi + 1, right);
+	}
+	else
+		insertSort(arr + left, right - left + 1);
 }
 
 
+// 需要具备将 递归改成循环的能力 
+// 1. 直接改成循环逻辑
+// 2. 借助数据结构 栈 实现递归改成循环
+// 递归是将 子区间的起始 存在函数栈帧中
+// 非递归 是将 区间的起始 存在 栈这个数据结构中
+void quickSortNonR(int* arr, int left, int right)
+{
+	Stack st;
+	StackInit(&st);
+	// 先入栈，再进行单趟
+	StackPush(&st, right);
+	StackPush(&st, left);
 
+	while (!StackEmpty(&st))
+	{
+		int begin = StackTop(&st);
+		StackPop(&st);
+
+		int end = StackTop(&st);
+		StackPop(&st);
+
+		int keyi = partition_2(arr, begin, end);
+		// 排完后，分割出了两个子区间 [left, keyi-1] keyi [keyi+1, right]
+
+		// 先入右区间，再入左区间	// 排完单趟之后，如果 子区间长度 大于1，就继续入栈进行排序
+		if (keyi + 1 < end)		// 区间长度大于
+		{
+			StackPush(&st, end);
+			StackPush(&st, keyi + 1);
+		}
+		if (begin < keyi - 1)
+		{
+			StackPush(&st, keyi - 1);
+			StackPush(&st, begin);
+		}
+	}
+
+	StackDestroy(&st);
+}

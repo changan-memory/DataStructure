@@ -38,6 +38,10 @@ int partition_2(int* arr, int left, int right);		// Ê¹ÓÃÈıÊıÈ¡ÖĞ×÷Îª key ÓÅ»¯¿ìÅ
 int partition_3(int* arr, int left, int right);		// ¿ìÅÅµÄÍÚ¿Ó·¨
 int partition_4(int* arr, int left, int right);		// Ë«Ö¸ÕëÊı×é·ÖÇø·¨
 
-void qucikSort_partition(int* arr, int left, int right);
+void quickSort_partition(int* arr, int left, int right);
+void quickSort_partition_optimize(int* arr, int left, int right);	// ¿ìÅÅµÄĞ¡Çø¼äÓÅ»¯
+
+void quickSortNonR(int* arr, int left, int right);	// Îª·ÀÖ¹Õ»Òç³ö£¬¿ìÅÅµÄ·Çµİ¹éĞ´·¨
+
 	
 

@@ -1,7 +1,8 @@
 #include "SeqList.h"
 
 // 初始化空间  设置初始状态
-bool SeqListInit(SeqList& L) {
+bool SeqListInit(SeqList& L) 
+{
 	L.base = (SLDataType*)malloc(sizeof(SLDataType) * INIT_CAPACITY);
 	if (L.base == NULL) {
 		perror("malloc failed\n");
@@ -110,24 +111,29 @@ void SeqListErase(SeqList& L, int pos) {
 }
 
 // size 与capacity
-int Size(const SeqList& L) {
+int Size(const SeqList& L) 
+{
 	return L.size;
 }
-int Capacity(const SeqList& L) {
+int Capacity(const SeqList& L) 
+{
 	return L.capacity;
 }
 
-int SeqListFind(const SeqList& L, SLDataType val) {
+int SeqListFind(const SeqList& L, SLDataType val) 
+{
 	if (L.base == NULL)
 		return -1;
-	for (int i = 0; i < L.size; ++i) {
+	for (int i = 0; i < L.size; ++i) 
+	{
 		if (L.base[i] == val)
 			return i;
 	}
 	return -1;
 }
 
-void SeqListPrint(const SeqList& L) {
+void SeqListPrint(const SeqList& L) 
+{
 	if (L.base == NULL)
 		return;
 	for (int i = 0; i < L.size; ++i)
