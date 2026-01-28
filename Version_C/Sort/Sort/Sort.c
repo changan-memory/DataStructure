@@ -592,3 +592,46 @@ void quickSortNonR(int* arr, int left, int right)
 
 	StackDestroy(&st);
 }
+
+// 归并排序
+// 两段区间有序了才能进行归并
+void _mergeSort(int* arr, int begin, int end, int* tmp)
+{
+	if (begin >= end)
+		return;
+	
+	int mid = (begin + end) / 2;
+	_mergeSort(arr, begin, mid, tmp);
+	_mergeSort(arr, mid + 1, end, tmp);
+
+	int begin1 = begin, end1 = mid;
+	int begin2 = mid + 1, end2 = end;
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (arr[begin1] < arr[begin2])
+			tmp[i++] = arr[begin1++];
+		else
+			tmp[i++] = arr[begin2++];
+	}
+	// 哪个数组还有值，就接着插入
+	while (begin1 <= end1)
+		tmp[i++] = arr[begin1++];
+
+	while (begin2 <= end2)
+		tmp[i++] = arr[begin2++];
+
+	memcpy(arr + begin, tmp + begin, sizeof(int) * (end - begin + 1));
+}
+void mergeSort(int* arr, int size)
+{
+	int* tmp = (int*)malloc(sizeof(int) * size);
+	if (tmp == NULL)
+	{
+		perror("malloc fail\n");
+		return;
+	}
+
+	_mergeSort(arr, 0, size - 1, tmp);
+	free(tmp);
+}

@@ -72,6 +72,21 @@ void testQuickSort()
 	printArray(arr, sizeof(arr) / sizeof(arr[0]));
 }
 
+void testMergeSort()
+{
+	//int arr[] = {6, 1, 2, 7, 9, 3, 4, 5, 10, 8};
+	int arr[] = { 6, 1, 2, 6, 9, 3, 6, 5, 10, 8 };
+
+	//int arr[] = { 5, 2, 4, 6, 1, 3 };
+
+	//int arr[] = { 9, 8, 7, 6, 5 ,4};
+
+	printArray(arr, sizeof(arr) / sizeof(arr[0]));
+	mergeSort(arr, sizeof(arr) / sizeof(arr[0]));
+
+	printArray(arr, sizeof(arr) / sizeof(arr[0]));
+}
+
 
 // 测试排序的性能对比
 void TestOP()
@@ -150,7 +165,8 @@ int main()
 	//testSelectSort();
 	//testBubbleSort();
 
-	testQuickSort();
+	//testQuickSort();
+	testMergeSort();
 
 	//TestOP();
 	return 0;

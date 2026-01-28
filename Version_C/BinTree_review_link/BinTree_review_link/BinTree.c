@@ -155,7 +155,8 @@ BinTNode* BinTFind(BinTNode* root, BTDataType data) {
 	return NULL;
 }
 // ≤„–Ú±È¿˙
-void LevelOrder(BinTNode* root) {
+void LevelOrder(BinTNode* root) 
+{
 	Queue q;
 	QueueInit(&q);
 	if (root)

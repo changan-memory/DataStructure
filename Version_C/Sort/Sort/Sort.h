@@ -43,5 +43,6 @@ void quickSort_partition_optimize(int* arr, int left, int right);	// ¿ìÅÅµÄĞ¡Çø¼
 
 void quickSortNonR(int* arr, int left, int right);	// Îª·ÀÖ¹Õ»Òç³ö£¬¿ìÅÅµÄ·Çµİ¹éĞ´·¨
 
+void mergeSort(int* arr, int size);
 	
 
