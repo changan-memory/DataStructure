@@ -37,7 +37,7 @@ public:
 	// 存负数: 代表当前 下标所代表的元素 为根
 	// 存 >=0 的数: 该数为 当前元素的父节点的 下标
 	UnionFindSet(size_t n)
-		:_ufs(n, -1)	// 
+		:_ufs(n, -1)
 	{}
 
 	// 提供如下成员函数
@@ -50,7 +50,7 @@ public:
 		if (root1 == root2)		// 两元素的根相同，即本身就在同一个集合，则不合并
 			return;
 
-		// 将元素合并到小集合    _ufs[root] 越小（越负），集合越大
+		// 将小集合合并到大集合    _ufs[root] 越小（越负），集合越大
 		if (_ufs[root1] > _ufs[root2])
 			std::swap(root1, root2);
 
