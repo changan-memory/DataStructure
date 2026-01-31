@@ -50,7 +50,8 @@ public:
 		if (root1 == root2)		// 两元素的根相同，即本身就在同一个集合，则不合并
 			return;
 
-		// 将小集合合并到大集合    _ufs[root] 越小（越负），集合越大
+		// 数据量小的集合 合并到  数据量大的集合    _ufs[root] 越小（越负），集合越大
+		// 作为子树合并的集合，层数会增加一层，因此要将 大集合  合并到  小集合
 		if (_ufs[root1] > _ufs[root2])
 			std::swap(root1, root2);
 
@@ -59,20 +60,42 @@ public:
 		_ufs[root2] = root1;
 	}
 
-	// 可以在边找的过程中，加一个压缩路径的过程
-	int FindRoot(int index)	const	// 找当前元素的根结点的下标
+	// 非压缩路径版本
+	//// 可以在边找的过程中，加一个压缩路径的过程
+	//int FindRoot(int index)	// 找当前元素的根结点的下标
+	//{
+	//	int parent = index;		// 刚开始，每个元素都是一个独立的的根
+	//	// 找根小于0的位置
+	//	while (_ufs[parent] >= 0)
+	//	{
+	//		parent = _ufs[parent];
+	//	}
+
+	//	return parent;
+	//}
+
+	// 压缩路径版
+	int FindRoot(int index)	// 找当前元素的根结点的下标
 	{
-		int parent = index;		// 刚开始，每个元素都是一个独立的的根
-		// 找根小于0的位置
-		while (_ufs[parent] >= 0)
+		// 1. 找根 的下标
+		int root = index;
+		while (_ufs[root] >= 0)
 		{
-			parent = _ufs[parent];
+			root = _ufs[root];
 		}
 
-		return parent;
+		// 2. 压缩路径
+		int cur = index;
+		while (_ufs[cur] >= 0)
+		{
+			int parent = _ufs[cur];		// 保存父亲
+			_ufs[cur] = root;			// 将父亲改成跟
+			cur = parent;				// 更新 cur
+		}
+		return root;
 	}
 
-	bool IsInSet(int index1, int index2) const	// 判断两个元素是否在同一个集合
+	bool IsInSet(int index1, int index2)	// 判断两个元素是否在同一个集合
 	{
 		int root1 = FindRoot(index1);
 		int root2 = FindRoot(index2);
