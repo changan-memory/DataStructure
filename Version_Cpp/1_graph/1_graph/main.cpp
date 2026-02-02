@@ -5,6 +5,7 @@
 
 int main()
 {
-	matrix::TestGraph();
+	//matrix::TestGraph();
+	link_table::TestGraph();
 	return 0;
 }
