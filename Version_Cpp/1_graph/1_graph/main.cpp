@@ -6,6 +6,7 @@
 int main()
 {
 	//matrix::TestGraph();
-	link_table::TestGraph();
+	matrix::TestGraphDBFS();
+	//link_table::TestGraph();
 	return 0;
 }

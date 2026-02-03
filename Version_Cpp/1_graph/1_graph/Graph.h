@@ -5,6 +5,9 @@
 #include <map>
 #include <limits>
 #include <string>
+#include <queue>
+#include <stack>
+
 using namespace std;
 
 namespace matrix
@@ -133,6 +136,158 @@ namespace matrix
 			}
 		}
 
+		// 广度优先遍历
+		void BFS(const V& srcV)
+		{
+			int srci = GetVertexIndex(srcV);
+			// 检查 srci 是否存在
+			if (srci < 0 || srci >= _vertex.size())
+			{
+				throw invalid_argument("源顶点不存在");
+			}
+
+			int vertexCount = _vertex.size();
+			// 标记数组 和 用于层序遍历的队列
+			queue<int> q;
+			vector<bool> visited(vertexCount, false);
+			// 入队列的时候，将该顶点标记为 已访问
+			q.push(srci);
+			visited[srci] = true;
+
+			while (!q.empty())
+			{
+				int front = q.front();
+				q.pop();
+				// 出队列的时候 把相邻的顶点都 入队列
+				for (int i = 0; i < vertexCount; ++i)
+				{
+					// 有关系的才可能入队
+					if (_matrix[front][i] != MAX_W)
+					{
+						// 只入队没被标记过的顶点
+						if (visited[i] == false)
+						{
+							q.push(i);
+							visited[i] = true;		// 入队后标记该顶点
+						}
+					}
+				}
+				cout << front << ":" << _vertex[front] << endl;
+			}
+		}
+
+		// x 度好友  
+		void BFS_N_level_frend(const V& srcV)
+		{
+			int srci = GetVertexIndex(srcV);
+			// 检查 srci 是否存在
+			if (srci < 0 || srci >= _vertex.size())
+			{
+				throw invalid_argument("源顶点不存在");
+			}
+
+			int vertexCount = _vertex.size();
+			// 标记数组 和 用于层序遍历的队列
+			queue<int> q;
+			vector<bool> visited(vertexCount, false);
+			// 入队列的时候，将该顶点标记为 已访问
+			q.push(srci);
+			visited[srci] = true;
+
+			int levelSize = 1;
+
+			// 队列出队时，一次出一行，并把这一行下面所有的元素都入队
+			while (!q.empty())
+			{
+				for (int i = 0; i < levelSize; ++i)
+				{
+					int front = q.front();
+					q.pop();
+					// 出队列的时候 把相邻的顶点都 入队列
+					for (int i = 0; i < vertexCount; ++i)
+					{
+						// 有关系的才可能入队
+						if (_matrix[front][i] != MAX_W)
+						{
+							// 只入队没被标记过的顶点
+							if (visited[i] == false)
+							{
+								q.push(i);
+								visited[i] = true;		// 入队后标记该顶点
+							}
+						}
+					}
+					cout << front << ":" << _vertex[front] << " ";
+				}
+				levelSize = q.size();
+				cout << endl;
+			}
+		}
+
+		// 深度优先遍历 递归版本
+		void _DFS(const int srci, vector<bool>& visited)
+		{
+			cout << srci << ":" << _vertex[srci] << " ";	// 访问
+			visited[srci] = true;		// 标记
+			// 找一个相邻的 没被访问过的点 深度优先遍历
+			for (int i = 0; i < _vertex.size(); ++i)
+			{
+				if (_matrix[srci][i] != MAX_W && visited[i] == false)	// 邻接且没有被访问过
+				{
+					_DFS(i, visited);
+				}
+			}
+		}
+		// 深度优先遍历 非递归版本  借助栈实现非递归
+		// 非递归 DFS 的核心实现（用栈模拟递归）
+		void _DFS_stack(const int srci, vector<bool>& visited)
+		{
+			int n = _vertex.size();
+
+			// 访问起点
+			cout << srci << ":" << _vertex[srci] << " ";
+			visited[srci] = true;
+			
+			stack<int> st;
+			st.push(srci);
+
+			while (!st.empty())
+			{
+				int top = st.top();
+				bool found = false;
+
+				// 找一个未访问的邻接点
+				for (int i = 0; i < n; ++i)
+				{
+					if (_matrix[top][i] != MAX_W && visited[i] == false)	// 邻接且没有被访问过
+					{
+						cout << i << ":" << _vertex[i] << " ";
+						visited[i] = true;
+
+						st.push(i);
+						found = true;
+						break;   // 只深入一个
+					}
+				}
+
+				// 没有可走的路，回溯
+				if (found == false)
+					st.pop();
+			}
+		}
+
+		void DFS(const V& src)
+		{
+			int srci = GetVertexIndex(src);
+			// 检查 srci 是否存在
+			if (srci < 0 || srci >= _vertex.size())
+			{
+				throw invalid_argument("源顶点不存在");
+			}
+
+			vector<bool> visited(_vertex.size(), false);
+			_DFS(srci, visited);	// 从 srci 开始深度优先遍历
+		}
 	private:
 		vector<V> _vertex;		// 顶点集合
 		map<V, int> _indexMap;	// 顶点映射下标
@@ -152,6 +307,19 @@ namespace matrix
 		g.AddEdge('3', '2', 6);
 		//g.Print();
 		g.Print1();
+	}
+	void TestGraphDBFS()
+	{
+		string a[] = { "张三", "李四", "王五", "赵六", "周七" };
+		Graph<string, int, INT_MAX> g1(a, sizeof(a) / sizeof(string));
+		g1.AddEdge("张三", "李四", 10);
+		g1.AddEdge("张三", "王五", 20);
+		g1.AddEdge("王五", "赵六", 40);
+		g1.AddEdge("王五", "周七", 30);
+		//g1.Print();
+		//g1.BFS("张三");
+		//g1.BFS_N_level_frend("张三");
+		g1.DFS("张三");
 	}
 }
 
