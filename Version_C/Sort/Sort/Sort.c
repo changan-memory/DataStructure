@@ -1,17 +1,49 @@
 #include "Sort.h"
 #include "Stack.h"
 
-// 最坏 O(N^2) 
-// 最好 O(N)
+
+void insertSort(int* arr, int size)
+{
+	// 默认 arr[0] 已有序
+	// 每一趟将 arr[i] 插入到 [0, i-1] 的有序区间
+	for (int i = 1; i < size; ++i)
+	{
+		int tmp = arr[i];
+		int end = i - 1;
+
+		// 比 tmp 大的元素整体后移
+		while (end >= 0 && tmp < arr[end])
+		{
+			arr[end + 1] = arr[end];
+			--end;
+		}
+
+		// 单趟循环结束有两种情况
+		// 1. tmp >= arr[end] 
+		// 2. end 为 -1
+		arr[end + 1] = tmp;		// 插入正确位置
+	}
+}
+
+
+
+// 插入排序
+// 时间复杂度：
+// 最好 O(N)   （数组已有序）
+// 最坏 O(N^2) （数组逆序）
+// 空间复杂度：O(1)
+// 稳定排序
 void insertSort(int* arr, int size)
 {
 	// 对从 下标为 1 开始 的每个数，都进行插入排序
 	for (int i = 1; i < size; ++i)
 	{
+		// 初始时第一个元素即为有序的，i从第二个元素开始扫描。每排完一趟，已有序元素的数量+1
 		// 对一个数进行插入排序的逻辑
 		int end = i - 1;			// 有序部分的  最后一个数的下标
-		int tmp = arr[i];			// 接下来要进行  插入排序 的数
+		int tmp = arr[end + 1];			// 待进行插入排序的元素，要排已有序元素的下一个
 
+		// 将tmp 与每个元素进行比较
 		while (end >= 0)
 		{
 			if (tmp >= arr[end])
@@ -25,18 +57,18 @@ void insertSort(int* arr, int size)
 				--end;
 			}
 		}
-		// 循环结束后，有两种情况
-		// 1. end 为 -1
-		// 2. tmp >= arr[end]
+		// 单趟循环结束有两种情况
+		// 1. tmp >= arr[end]  break 结束，说明 tmp 直接插入末尾(end+1)即可
+		// 2. end 为 -1  循环结束(end == -1)，说明 tmp 应该插入数组的第一个位置
 		arr[end + 1] = tmp;		// 两种情况均执行该操作即可
 	}
 }
 
 // gap 越大，跳的越快，就越不接近有序
-// 先排三组中的第一组，再排三组的第二组
 // gap > 1 
 // 可以认为希尔排序的 时间复杂度为 O(n^1.3)
-void shellSort(int* arr, int size)
+// 以下写法，是先排序每组中的第一个位置，再排每组中的第二个位置
+void ShellSort(int* arr, int size)
 {
 	int gap = size;
 	
@@ -70,8 +102,7 @@ void shellSort(int* arr, int size)
 	}
 }
 
-// 先排第一组，再排第二组，再排第三组
-void shellSort_1(int* arr, int size)
+void shellSort(int* arr, int size)
 {
 	int gap = size;
 
@@ -80,7 +111,6 @@ void shellSort_1(int* arr, int size)
 		//gap /= 2;
 		gap = gap / 3 + 1;
 
-		// 多组 跳跃插入排序   gap 是几，就被分成了几组
 		for (int j = 0; j < gap; j++)
 		{
 			// 从组内的下个数开始进行预插入排序
@@ -109,6 +139,44 @@ void shellSort_1(int* arr, int size)
 	}
 }
 
+// 该写法是: 先排第一组，再排第二组，再排第三组
+void ShellSort(int* arr, int size)
+{
+	// 实际工程中，gap 的值是变化的，一般的变化取 gap = gap/3 + 1
+	// gap > 1 : 预排序
+	// gap == 1 : 直接插入排序
+	int gap = size;
+	while (gap > 1)
+	{
+		//gap /= 2;
+		gap = gap / 3 + 1;
+		// 多个组进行 跳跃插入排序   gap 是几，就被分成了几组
+		for (int j = 0; j < gap; ++j)	// j 为每个组的起点下标
+		{
+			// 将一组内的所有元素进行 跳跃插入排序  
+			for (int i = j + gap; i < size; i += gap)
+			{
+				//希尔排序的预排序逻辑  只是将 直接插入排序中的 一步一步跳，改成了一次跳 gap 步
+				int end = i - gap;				// 当前组中  有序部分的 最后一个数的下标
+				int tmp = arr[end + gap];		// 当前组中  接下来要进行插入 排序 的数
+
+				while (end >= j)		// 当前组中 第一个数的下标
+				{
+					if (tmp > arr[end])
+					{
+						break;
+					}
+					else
+					{
+						arr[end + gap] = arr[end];
+						end -= gap;
+					}
+				}
+				arr[end + gap] = tmp;
+			}
+		}
+	}
+}
 
 void Swap(int* x, int* y)
 {
@@ -121,11 +189,12 @@ void Swap(int* x, int* y)
 void SelectSort(int* arr, int size)
 {
 	// 对第 j 个位置，找出合适的数放在这里
-	for (int j = 0; j < size; ++j)
+	// [0, size-2] 这 n-1 个元素确定后，最后一个元素必然有序
+	for (int j = 0; j < size - 1; ++j)
 	{
-		// 找数的过程，在 [j, size - 1] 区间中找数
+		// 找数的过程，在区间 [j, size - 1] 中找数
 		int minIndex = j;	
-		for (int i = j + 1; i <= size - 1; ++i)
+		for (int i = j + 1; i < size; ++i)
 		{
 			if (arr[i] < arr[minIndex])
 				minIndex = i;
@@ -136,10 +205,10 @@ void SelectSort(int* arr, int size)
 	}
 }
 
-
-// 优化版本   遍历一遍可以 同时找出 最小值和最大值
-// 最好 O(N^2)
-// 最坏 O(N^2)
+// 优化后的选择排序
+// 遍历一次 同时找出最大值和最小值，并放在正确位置上
+// 时间复杂度: 最好 O(N^2)
+// 时间复杂度: 最坏 O(N^2)
 void selectSort(int* arr, int size)
 {
 	int left = 0, right = size - 1;
@@ -147,18 +216,25 @@ void selectSort(int* arr, int size)
 	while (left < right)
 	{
 		// 找区间 [left, right] 中的最大值和最小值
-		int minIndex = left, maxIndex = left;
+		int minIndex = left, maxIndex = right;
 		for (int i = left + 1; i <= right; ++i)
 		{
 			if (arr[i] < arr[minIndex])
 				minIndex = i;
-			if (arr[i] > arr[maxIndex])
+			else if (arr[i] > arr[maxIndex])
 				maxIndex = i;
 		}
+		// 找到了 区间 [left, right] 中的最大值和最小值 的下标
+
 		Swap(&arr[left], &arr[minIndex]);
+		// 如果 maxIndex 和 left 相同，此处交换后 会导致: 最大值被交换到了 minIndex 处
+		// 需修正 maxIndex
 		if (left == maxIndex)
+		{
 			maxIndex = minIndex;
+		}
 		Swap(&arr[right], &arr[maxIndex]);
+
 		++left;
 		--right;
 	}

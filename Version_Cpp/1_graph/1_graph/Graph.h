@@ -321,6 +321,27 @@ namespace matrix
 		//g1.BFS_N_level_frend("张三");
 		g1.DFS("张三");
 	}
+
+	void TestGraphDBFS_char()
+	{
+		char a[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G','H', 'I' };
+		Graph<char, int, INT_MAX, false> g1(a, sizeof(a) / sizeof(char));
+		g1.AddEdge('A', 'B', 10);
+		g1.AddEdge('A', 'C', 10);
+		g1.AddEdge('A', 'D', 10);
+		g1.AddEdge('B', 'E', 10);
+		g1.AddEdge('B', 'C', 10);
+		g1.AddEdge('C', 'F', 10);
+		g1.AddEdge('D', 'F', 10);
+		g1.AddEdge('E', 'G', 10);
+		g1.AddEdge('F', 'H', 10);
+		g1.AddEdge('H', 'I', 10);
+		
+		//g1.Print();
+		//g1.BFS('A');
+		g1.BFS_N_level_frend('A');
+		//g1.DFS('A');
+	}
 }
 
 

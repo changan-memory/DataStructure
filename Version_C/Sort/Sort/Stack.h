@@ -1,3 +1,5 @@
+#define INIT_CAPACITY 4
+
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +14,7 @@
 //	int top;
 //};
 
-#define INIT_CAPACITY 4
+
 typedef int StackDataType;		//括号匹配需要把 int 换成char
 
 typedef struct Stack {

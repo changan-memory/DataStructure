@@ -160,13 +160,13 @@ void TestOP()
 }
 int main() 
 {
-	//testInsertSort();
+	testInsertSort();
 	//testShellSort();
 	//testSelectSort();
 	//testBubbleSort();
 
 	//testQuickSort();
-	testMergeSort();
+	//testMergeSort();
 
 	//TestOP();
 	return 0;
